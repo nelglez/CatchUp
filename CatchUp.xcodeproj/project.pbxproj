@@ -8,20 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		F47101CF1FB5614A009D34EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101CE1FB5614A009D34EF /* AppDelegate.swift */; };
-		F47101D11FB5614A009D34EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101D01FB5614A009D34EF /* ViewController.swift */; };
+		F47101D11FB5614A009D34EF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101D01FB5614A009D34EF /* HomeViewController.swift */; };
 		F47101D41FB5614A009D34EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47101D21FB5614A009D34EF /* Main.storyboard */; };
 		F47101D61FB5614A009D34EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47101D51FB5614A009D34EF /* Assets.xcassets */; };
 		F47101D91FB5614A009D34EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47101D71FB5614A009D34EF /* LaunchScreen.storyboard */; };
+		F47101E11FBD1F82009D34EF /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101E01FBD1F82009D34EF /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F47101CB1FB5614A009D34EF /* CatchUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47101CE1FB5614A009D34EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F47101D01FB5614A009D34EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F47101D01FB5614A009D34EF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F47101D31FB5614A009D34EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F47101D51FB5614A009D34EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F47101D81FB5614A009D34EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F47101DA1FB5614A009D34EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F47101E01FBD1F82009D34EF /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,11 +37,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F42193F81FDE1DFF004E86CB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F47101C21FB5614A009D34EF = {
 			isa = PBXGroup;
 			children = (
 				F47101CD1FB5614A009D34EF /* CatchUp */,
 				F47101CC1FB5614A009D34EF /* Products */,
+				F42193F81FDE1DFF004E86CB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,9 +64,10 @@
 		F47101CD1FB5614A009D34EF /* CatchUp */ = {
 			isa = PBXGroup;
 			children = (
-				F47101CE1FB5614A009D34EF /* AppDelegate.swift */,
-				F47101D01FB5614A009D34EF /* ViewController.swift */,
+				F47101D01FB5614A009D34EF /* HomeViewController.swift */,
+				F47101E01FBD1F82009D34EF /* DetailsViewController.swift */,
 				F47101D21FB5614A009D34EF /* Main.storyboard */,
+				F47101CE1FB5614A009D34EF /* AppDelegate.swift */,
 				F47101D51FB5614A009D34EF /* Assets.xcassets */,
 				F47101D71FB5614A009D34EF /* LaunchScreen.storyboard */,
 				F47101DA1FB5614A009D34EF /* Info.plist */,
@@ -97,6 +108,11 @@
 					F47101CA1FB5614A009D34EF = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -136,8 +152,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F47101D11FB5614A009D34EF /* ViewController.swift in Sources */,
+				F47101D11FB5614A009D34EF /* HomeViewController.swift in Sources */,
 				F47101CF1FB5614A009D34EF /* AppDelegate.swift in Sources */,
+				F47101E11FBD1F82009D34EF /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
