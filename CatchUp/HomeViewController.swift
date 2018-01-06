@@ -19,6 +19,8 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     
     @IBOutlet weak var friendsTable: UITableView!
     
+    let store = CNContactStore()
+    
     var activeRow = 0
     
     //var storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")  as! [String:String]
@@ -33,7 +35,6 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         //Requests access to user's contacts
         case .notDetermined:
             //print("Not Determined")
-            let store = CNContactStore()
             store.requestAccess(for: .contacts){succeeded, err in
                 guard err == nil && succeeded else{
                     return
@@ -66,7 +67,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     
     //Executes when a contact is selected
     //First checks if there are keys in the dictionary
-    //If not, initialize an empty [String:String: dictionary
+    //If not, initialize an empty [String:String] dictionary
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         
         if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
@@ -163,7 +164,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
             return cell
         
-            //If there are keys stored for key 'selectedContacts'
+        //If there are keys stored for key 'selectedContacts'
         } else {
             
             let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:String]
@@ -188,30 +189,9 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         
     }
     
-    /*
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == UITableViewCellEditingStyle.delete {
-            
-            let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
-            
-            var selectedContacts: [String:String] = storedContacts as! [String:String]
-            
-            //returns name (key) of selected
-            let selected = Array(selectedContacts.keys)[indexPath.row]
-            
-            //returns phone number (value) of selected
-            //let removeNum = Array(selectedContacts.values)[indexPath.row]
-            
-            selectedContacts.removeValue(forKey: selected)
-            
-            UserDefaults.standard.set(selectedContacts, forKey: "selectedContacts")
-            
-            friendsTable.reloadData()
-        }
-    }
-     */
-    
+    //what happens when a table cell is swiped
+    //long swipe = delete cell
+    //short swipe reveals delete and details
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
     
         let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
@@ -249,7 +229,6 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     }
     
     
-    
     func isKeyPresentInUserDefaults(key: String) -> Bool {
         
         return UserDefaults.standard.object(forKey: key) != nil
@@ -258,9 +237,15 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     
     //keeps track of which row is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         activeFriend = indexPath.row
         
+        let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell!
+        
+        print(currentCell?.textLabel!.text! ?? "None")
+        
         performSegue(withIdentifier: "toDetailsViewController", sender: nil)
+        
     }
     
     //what happens when the segue is performed
@@ -268,7 +253,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         if segue.identifier == "toDetailsViewController" {
             let detailsViewController = segue.destination as! DetailsViewController
             
-            detailsViewController.activeRow = activeRow //sets activeRow in DetailsViewController to the row just tapped in TableViewController! Very cool
+            detailsViewController.activeFriend = activeFriend //sets activeRow in DetailsViewController to the row just tapped in TableViewController!
         }
     }
     
@@ -299,7 +284,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         
         let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
         
-        print("Contacts Dictionary: \(storedContacts)")
+        print("Contacts Dictionary: \(storedContacts ?? "Nothing Here Yet")")
         
         friendsTable.reloadData()
         

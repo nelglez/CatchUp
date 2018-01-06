@@ -10,14 +10,32 @@ import UIKit
 
 class DetailsViewController: UIViewController {
     
-    var activeRow = 0
+    @IBOutlet weak var contactName: UILabel!
+    
+    @IBOutlet weak var contactNumber: UILabel!
+    
+    @IBOutlet weak var contactEmail: UILabel!
+    
+    var activeFriend = 0
+    
+    let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:String]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print (activeFriend)
-
-        // Do any additional setup after loading the view.
+        let intIndex = activeFriend
+        
+        let index = storedContacts.index(storedContacts.startIndex, offsetBy: intIndex)
+        
+        contactName.text = storedContacts[index].key
+        
+        contactNumber.text = storedContacts[index].value
+        
+        contactEmail.text = "testemail@gmail.com"
+        
+        //print (storedContacts[index])
+        
+        // print (activeFriend)
     }
 
     override func didReceiveMemoryWarning() {
