@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  CatchUp
 //
 //  Created by Ryan Token on 11/9/17.
@@ -22,9 +22,6 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     let store = CNContactStore()
     
     var activeRow = 0
-    
-    //var storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")  as! [String:String]
-    
     
     //Executes when the + button is tapped
     //Requests access if not given yet, and displays the user's Contacts upon approval
@@ -66,31 +63,177 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     }
     
     //Executes when a contact is selected
-    //First checks if there are keys in the dictionary
-    //If not, initialize an empty [String:String] dictionary
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         
+        //First checks if there are keys in the dictionary
+        //If not, initialize an empty [String:[String]] dictionary
         if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
             
-            var selectedContacts: [String:String] = [:]
+            var selectedContacts: [String:[String]] = [:]
             
             //save each contact selected and print their name and phone number
             for contact in contacts {
                 
-                // user name
-                let fullName:String = contact.givenName + " " + contact.familyName
+                let contactPicture: String
                 
-                // user phone number array and first number if they have multiple listed
+                //contact picture
+                if contact.imageDataAvailable == true {
+                    // there is an image for this contact
+                    
+                    contactPicture = (contact.thumbnailImageData?.base64EncodedString())!
+                    
+                    /*
+                     let contactImage: UIImage = UIImage(data: contact.imageData!)!
+                     
+                     //custom convertUIImageToString function way down below
+                     contactPicture = convertUIImageToString(image: contactImage)
+                     */
+                    
+                } else {
+                    
+                    let imageData: NSData = UIImagePNGRepresentation(#imageLiteral(resourceName: "DefaultContact.jpg"))! as NSData
+                    //let contactImageData: Data = UIImagePNGRepresentation(#imageLiteral(resourceName: "Default Contact.png"))!
+                    
+                    contactPicture = imageData.base64EncodedString()
+                    
+                    /*
+                     let contactImageData: Data = UIImagePNGRepresentation(#imageLiteral(resourceName: "Default Contact.png"))!
+                     let contactImage: UIImage = UIImage(data: contactImageData)!
+                     
+                     contactPicture = convertUIImageToString(image: contactImage)
+                     
+                     //contactPicture = UIImage(data: contactPictureData)!
+                     */
+                    
+                }
+                
+                //set the contact's name
+                var fullName:String
+                
+                //if they have a first and a last name
+                if contact.givenName != "" && contact.familyName != "" {
+                    
+                    fullName = contact.givenName + " " + contact.familyName
+                    
+                    //if they have a first name, but no last name
+                } else if contact.givenName != "" && contact.familyName == "" {
+                    
+                    fullName = contact.givenName
+                    
+                    //if they have no first name, but have a last name
+                } else if contact.givenName == "" && contact.familyName != "" {
+                    
+                    fullName = contact.familyName
+                    
+                } else {
+                    
+                    fullName = ""
+                    
+                }
+                
+                //let fullName:String = contact.givenName + " " + contact.familyName
+                
+                //user phone number array and first number
                 let userPhoneNumbers:[CNLabeledValue<CNPhoneNumber>] = contact.phoneNumbers
-                let firstPhoneNumber:CNPhoneNumber = userPhoneNumbers[0].value
+                var primaryPhoneNumber:String
+                var secondaryPhoneNumber:String
                 
-                // user phone number as a string so I can display it on a label
-                let primaryPhoneNumber:String = firstPhoneNumber.stringValue
+                //user email addresses array
+                let emailAddresses = contact.emailAddresses
+                var primaryEmail:String
+                var secondaryEmail:String
                 
-                // print("Username: \(userName)")
-                // print("Phone Number: \(primaryPhoneNumber)")
+                //check for phone numbers and set values
+                if userPhoneNumbers.count > 0 {
+                    
+                    let firstPhoneNumber = userPhoneNumbers[0].value
+                    primaryPhoneNumber = firstPhoneNumber.stringValue
+                    
+                    if userPhoneNumbers.count > 1 {
+                        
+                        let secondPhoneNumber = userPhoneNumbers[1].value
+                        secondaryPhoneNumber = secondPhoneNumber.stringValue
+                        
+                    } else {
+                        
+                        secondaryPhoneNumber = ""
+                        
+                    }
+                    
+                } else {
+                    
+                    primaryPhoneNumber = ""
+                    secondaryPhoneNumber = ""
+                    
+                }
                 
-                selectedContacts[fullName] = primaryPhoneNumber
+                //check for email addresses and set values
+                if emailAddresses.count > 0 {
+                    
+                    let firstEmail = emailAddresses[0].value
+                    primaryEmail = firstEmail as String
+                    
+                    if emailAddresses.count > 1 {
+                        
+                        let secondEmail = emailAddresses[1].value
+                        secondaryEmail = secondEmail as String
+                        
+                    } else {
+                        
+                        secondaryEmail = ""
+                        
+                    }
+                    
+                } else {
+                    
+                    primaryEmail = ""
+                    secondaryEmail = ""
+                    
+                }
+                
+                //if two phone numbers and two email addresses
+                if userPhoneNumbers.count > 1 && emailAddresses.count > 1 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, secondaryPhoneNumber, primaryEmail, secondaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if two phone numbers and one email address
+                } else if userPhoneNumbers.count > 1 && emailAddresses.count > 0 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, secondaryPhoneNumber, primaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if one phone number and two email addresses
+                } else if userPhoneNumbers.count > 0 && emailAddresses.count > 1 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, primaryEmail, secondaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if 1 phone number and one email address
+                } else if userPhoneNumbers.count > 0 && emailAddresses.count > 0 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, primaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if no phone number and one email address
+                } else if userPhoneNumbers.count == 0 && emailAddresses.count > 0 {
+                    
+                    selectedContacts[fullName] = [primaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if one phone number and no email address
+                } else if userPhoneNumbers.count > 0 && emailAddresses.count == 0 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if none of the above
+                } else {
+                    
+                    selectedContacts[fullName] = [contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                }
                 
                 UserDefaults.standard.set(selectedContacts, forKey: "selectedContacts")
                 
@@ -98,30 +241,176 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
                 
             }
             
-        //If there are already stored keys, set the dictionary to those stored keys
+        //if there are already stored keys, set the dictionary to those stored keys
         } else {
             
             let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
             
-            var selectedContacts: [String:String] = storedContacts as! [String:String]
+            var selectedContacts: [String:[String]] = storedContacts as! [String:[String]]
             
             //save each contact selected and print their name and phone number
             for contact in contacts {
                 
-                // user name
-                let fullName:String = contact.givenName + " " + contact.familyName
+                let contactPicture: String
                 
-                // user phone number array and first number
+                //contact picture
+                if contact.imageDataAvailable == true {
+                    // there is an image for this contact
+                    
+                    contactPicture = (contact.thumbnailImageData?.base64EncodedString())!
+                    
+                    /*
+                     let contactImage: UIImage = UIImage(data: contact.imageData!)!
+                     
+                     //custom convertUIImageToString function way down below
+                     contactPicture = convertUIImageToString(image: contactImage)
+                     */
+                    
+                } else {
+                    
+                    let imageData: NSData = UIImagePNGRepresentation(#imageLiteral(resourceName: "DefaultContact.jpg"))! as NSData
+                    //let contactImageData: Data = UIImagePNGRepresentation(#imageLiteral(resourceName: "Default Contact.png"))!
+                    
+                    contactPicture = imageData.base64EncodedString()
+                    
+                    /*
+                     let contactImageData: Data = UIImagePNGRepresentation(#imageLiteral(resourceName: "Default Contact.png"))!
+                     let contactImage: UIImage = UIImage(data: contactImageData)!
+                     
+                     contactPicture = convertUIImageToString(image: contactImage)
+                     
+                     //contactPicture = UIImage(data: contactPictureData)!
+                     */
+                    
+                }
+                
+                //set the contact's name
+                var fullName:String
+                
+                //if they have a first and a last name
+                if contact.givenName != "" && contact.familyName != "" {
+                    
+                    fullName = contact.givenName + " " + contact.familyName
+                    
+                    //if they have a first name, but no last name
+                } else if contact.givenName != "" && contact.familyName == "" {
+                    
+                    fullName = contact.givenName
+                    
+                    //if they have no first name, but have a last name
+                } else if contact.givenName == "" && contact.familyName != "" {
+                    
+                    fullName = contact.familyName
+                    
+                } else {
+                    
+                    fullName = ""
+                    
+                }
+                
+                //let fullName:String = contact.givenName + " " + contact.familyName
+                
+                //user phone number array and first number
                 let userPhoneNumbers:[CNLabeledValue<CNPhoneNumber>] = contact.phoneNumbers
-                let firstPhoneNumber:CNPhoneNumber = userPhoneNumbers[0].value
+                var primaryPhoneNumber:String
+                var secondaryPhoneNumber:String
                 
-                // user phone number as a string so I can display it on a label
-                let primaryPhoneNumber:String = firstPhoneNumber.stringValue
+                //user email addresses array
+                let emailAddresses = contact.emailAddresses
+                var primaryEmail:String
+                var secondaryEmail:String
                 
-                // print("Username: \(userName)")
-                // print("Phone Number: \(primaryPhoneNumber)")
+                //check for phone numbers and set values
+                if userPhoneNumbers.count > 0 {
+                    
+                    let firstPhoneNumber = userPhoneNumbers[0].value
+                    primaryPhoneNumber = firstPhoneNumber.stringValue
+                    
+                    if userPhoneNumbers.count > 1 {
+                        
+                        let secondPhoneNumber = userPhoneNumbers[1].value
+                        secondaryPhoneNumber = secondPhoneNumber.stringValue
+                        
+                    } else {
+                        
+                        secondaryPhoneNumber = ""
+                        
+                    }
+                    
+                } else {
+                    
+                    primaryPhoneNumber = ""
+                    secondaryPhoneNumber = ""
+                    
+                }
                 
-                selectedContacts[fullName] = primaryPhoneNumber
+                //check for email addresses and set values
+                if emailAddresses.count > 0 {
+                    
+                    let firstEmail = emailAddresses[0].value
+                    primaryEmail = firstEmail as String
+                    
+                    if emailAddresses.count > 1 {
+                        
+                        let secondEmail = emailAddresses[1].value
+                        secondaryEmail = secondEmail as String
+                        
+                    } else {
+                        
+                        secondaryEmail = ""
+                        
+                    }
+                    
+                } else {
+                    
+                    primaryEmail = ""
+                    secondaryEmail = ""
+                    
+                }
+                
+                //if two phone numbers and two email addresses
+                if userPhoneNumbers.count > 1 && emailAddresses.count > 1 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, secondaryPhoneNumber, primaryEmail, secondaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if two phone numbers and one email address
+                } else if userPhoneNumbers.count > 1 && emailAddresses.count > 0 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, secondaryPhoneNumber, primaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if one phone number and two email addresses
+                } else if userPhoneNumbers.count > 0 && emailAddresses.count > 1 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, primaryEmail, secondaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if 1 phone number and one email address
+                } else if userPhoneNumbers.count > 0 && emailAddresses.count > 0 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, primaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if no phone number and one email address
+                } else if userPhoneNumbers.count == 0 && emailAddresses.count > 0 {
+                    
+                    selectedContacts[fullName] = [primaryEmail, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if one phone number and no email address
+                } else if userPhoneNumbers.count > 0 && emailAddresses.count == 0 {
+                    
+                    selectedContacts[fullName] = [primaryPhoneNumber, contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                    //if none of the above
+                } else {
+                    
+                    selectedContacts[fullName] = [contactPicture]
+                    print ("Image Available: ", contact.imageDataAvailable)
+                    
+                }
                 
                 UserDefaults.standard.set(selectedContacts, forKey: "selectedContacts")
                 
@@ -142,7 +431,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
         } else {
             
-            let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:String]
+            let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
             
             let tableRows = storedContacts.count
             
@@ -167,9 +456,9 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         //If there are keys stored for key 'selectedContacts'
         } else {
             
-            let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:String]
+            let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
             
-            var selectedContacts: [String:String] = storedContacts
+            var selectedContacts: [String:[String]] = storedContacts
             
             let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "Cell")
             
@@ -179,9 +468,11 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             //returns phone number (value) of selected
             let contactNumber = Array(selectedContacts.values)[indexPath.row]
             
+            //cell title
             cell.textLabel?.text = contactName
             
-            cell.detailTextLabel?.text = contactNumber
+            //cell subtitle
+            cell.detailTextLabel?.text = contactNumber[0]
             
             return cell
             
@@ -196,7 +487,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     
         let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
         
-        var selectedContacts: [String:String] = storedContacts as! [String:String]
+        var selectedContacts: [String:[String]] = storedContacts as! [String:[String]]
         
         let delete = UITableViewRowAction(style: .normal, title: "Delete") { (action, indexPath) in
             
@@ -228,10 +519,25 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         return [delete, details]
     }
     
+    //maybe works?
+    func convertUIImageToString (image: UIImage) -> String {
+        
+        var imageAsData: Data = UIImagePNGRepresentation(image)!
+        var imageAsInt: Int = 0 // initialize
+        
+        let data = NSData(bytes: &imageAsData, length: MemoryLayout<Int>.size)
+        data.getBytes(&imageAsInt, length: MemoryLayout<Int>.size)
+        
+        let imageAsString: String = String (imageAsInt)
+        
+        return imageAsString
+        
+    }
+    
     
     func isKeyPresentInUserDefaults(key: String) -> Bool {
         
-        return UserDefaults.standard.object(forKey: key) != nil
+        return UserDefaults.standard.object(forKey: "selectedContacts") != nil
         
     }
     
@@ -260,7 +566,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        headerTitle.largeTitleDisplayMode = .automatic
+        headerTitle.largeTitleDisplayMode = .always
         
         /* CLEAR ALL USER DEFAULTS ON APP LOAD! WARNING
             if let bundle = Bundle.main.bundleIdentifier {
