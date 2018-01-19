@@ -314,14 +314,13 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        //if the dictionary is empty
         if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
             
-            //print("Nothing to see here")
             return 0
             
+            //if there is something in the dictionary
         } else {
-            
-            print ("we're in here")
             
             let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
             
@@ -334,7 +333,10 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         return 60
+        
+        //return UITableViewAutomaticDimension
     }
     
     //What each cell text shows
@@ -392,6 +394,8 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
             //cell subtitle
             cell.detailTextLabel?.text = contactNumber[0]
+            
+            cell.clipsToBounds = true
             
             return cell
             
