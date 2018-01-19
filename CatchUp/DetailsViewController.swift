@@ -15,6 +15,8 @@ class DetailsViewController: UIViewController {
     //contact picture
     @IBOutlet weak var contactPicture: UIImageView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     //labels
     @IBOutlet weak var contactName: UILabel!
     
@@ -26,6 +28,14 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var secondaryEmailLabel: UILabel!
     
+    @IBOutlet weak var primaryPostalAddressLabel: UILabel!
+    
+    @IBOutlet weak var secondaryPostalAddressLabel: UILabel!
+    
+    @IBOutlet weak var birthdayLabel: UILabel!
+    
+    @IBOutlet weak var anniversaryLabel: UILabel!
+    
     //buttons
     @IBOutlet weak var primaryPhoneNumber: UIButton!
     
@@ -36,15 +46,24 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var secondaryEmailAddress: UIButton!
     
     //strings
-    var primaryPhone:String = "No Phone Number"
+    var primaryPhone:String = "No Phone Number Saved"
     
-    var secondaryPhone:String = "No Secondary Phone Number"
+    var secondaryPhone:String = "No Secondary Phone Number Saved"
     
-    var primaryEmail:String = "No Email Address"
+    var primaryEmail:String = "No Email Address Saved"
     
-    var secondaryEmail:String = "No Secondary Email Address"
+    var secondaryEmail:String = "No Secondary Email Address Saved"
     
-    let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
+    var primaryPostalAddress:String = "No Postal Address Saved"
+    
+    var secondaryPostalAddress:String = "No Secondary Postal Address Saved"
+    
+    var birthday:String = "No Birthday Saved"
+    
+    var anniversary:String = "No Anniversary Saved"
+    
+    //set who we have stored
+    var storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +71,17 @@ class DetailsViewController: UIViewController {
         let index = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
         contactName.text = storedContacts[index].key
+        
+        //set contact picture
+        contactPicture.image = getImageString().imageFromBase64EncodedString
+        contactPicture.layer.borderWidth = 1
+        contactPicture.layer.masksToBounds = false
+        contactPicture.layer.borderColor = UIColor.clear.cgColor
+        contactPicture.layer.cornerRadius = contactPicture.frame.height/2
+        contactPicture.clipsToBounds = true
+        
+        //set postal addresses
+        
         
         var emails = 0
         
@@ -87,7 +117,7 @@ class DetailsViewController: UIViewController {
         //if there are at least two indexes, only loop through the first two to look for phone numbers
         if storedContacts[index].value.count == 1 {
             
-            primaryPhone = "No Phone Number"
+            primaryPhone = "No Phone Number Saved"
             
         } else {
             
@@ -122,10 +152,8 @@ class DetailsViewController: UIViewController {
             
         }
         
-        contactPicture.image = getImageString().imageFromBase64EncodedString
-        
         //if there's no primary phone number, hide the button, show the un-tappable label that says "No Phone Number"
-        if primaryPhone == "No Phone Number" {
+        if primaryPhone == "No Phone Number Saved" {
             
             primaryPhoneNumber.isHidden = true
             primaryPhoneLabel.isHidden = false
@@ -141,7 +169,7 @@ class DetailsViewController: UIViewController {
         }
         
         //if there's no secondary phone number, hide the button, show the un-tappable label that says "No Phone Number"
-        if secondaryPhone == "No Secondary Phone Number" {
+        if secondaryPhone == "No Secondary Phone Number Saved" {
             
             secondaryPhoneNumber.isHidden = true
             secondaryPhoneLabel.isHidden = false
@@ -157,7 +185,7 @@ class DetailsViewController: UIViewController {
         }
         
         //if there's no primary email address, hide the button, show the un-tappable label that says "No Email Address"
-        if primaryEmail == "No Email Address" {
+        if primaryEmail == "No Email Address Saved" {
             
             primaryEmailAddress.isHidden = true
             primaryEmailLabel.isHidden = false
@@ -173,7 +201,7 @@ class DetailsViewController: UIViewController {
         }
         
         //if there's no secondary email address, hide the button, show the un-tappable label that says "No Secondary Email Address"
-        if secondaryEmail == "No Secondary Email Address" {
+        if secondaryEmail == "No Secondary Email Address Saved" {
             
             secondaryEmailAddress.isHidden = true
             secondaryEmailLabel.isHidden = false
@@ -185,6 +213,54 @@ class DetailsViewController: UIViewController {
             secondaryEmailLabel.isHidden = true
             secondaryEmailAddress.isHidden = false
             secondaryEmailAddress.setTitle(secondaryEmail, for: .normal)
+            
+        }
+        
+        //set postal address
+        if storedContacts[index].value[4] != "" {
+            
+            primaryPostalAddress = storedContacts[index].value[4]
+            primaryPostalAddressLabel.text = primaryPostalAddress
+            
+        } else  {
+            
+            primaryPostalAddressLabel.text = primaryPostalAddress
+            
+        }
+        
+        //set secondary postal address
+        if storedContacts[index].value[5] != "" {
+            
+            secondaryPostalAddress = storedContacts[index].value[5]
+            secondaryPostalAddressLabel.text = secondaryPostalAddress
+            
+        } else  {
+            
+            secondaryPostalAddressLabel.text = secondaryPostalAddress
+            
+        }
+        
+        //set birthday
+        if storedContacts[index].value[6] != "" {
+            
+            birthday = storedContacts[index].value[6]
+            birthdayLabel.text = birthday
+            
+        } else  {
+            
+            birthdayLabel.text = birthday
+            
+        }
+        
+        //set anniversary
+        if storedContacts[index].value[7] != "" {
+            
+            anniversary = storedContacts[index].value[7]
+            anniversaryLabel.text = anniversary
+            
+        } else  {
+            
+            anniversaryLabel.text = anniversary
             
         }
         
@@ -219,6 +295,8 @@ class DetailsViewController: UIViewController {
     
     @IBAction func primaryPhoneNumberPressed(_ sender: Any) {
         
+        primaryPhone = primaryPhone.replacingOccurrences(of: "[^\\d+]", with: "", options: [.regularExpression])
+        
         if let number = URL(string: "tel://\(primaryPhone)"), UIApplication.shared.canOpenURL(number) {
                 UIApplication.shared.open(number)
         }
@@ -226,6 +304,8 @@ class DetailsViewController: UIViewController {
     }
     
     @IBAction func secondaryPhoneNumberPressed(_ sender: Any) {
+        
+        secondaryPhone = secondaryPhone.replacingOccurrences(of: "[^\\d+]", with: "", options: [.regularExpression])
         
         if let number = URL(string: "tel://\(secondaryPhone)"), UIApplication.shared.canOpenURL(number) {
             UIApplication.shared.open(number)
@@ -235,51 +315,47 @@ class DetailsViewController: UIViewController {
     
     @IBAction func primaryEmailAddressPressed(_ sender: Any) {
         
-        if let number = URL(string: "tel://\(primaryEmail)"), UIApplication.shared.canOpenURL(number) {
-            UIApplication.shared.open(number)
+        if let email  = URL(string: "mailto:\(primaryEmail)") {
+            UIApplication.shared.open(email)
+            
+            print ("Mail app opened")
+        } else {
+            print ("Mapp app not opened")
         }
         
     }
     
     @IBAction func secondaryEmailAddressPressed(_ sender: Any) {
         
-        if let number = URL(string: "tel://\(secondaryEmail)"), UIApplication.shared.canOpenURL(number) {
-            UIApplication.shared.open(number)
+        if let email  = URL(string: "mailto:\(secondaryEmail)") {
+            UIApplication.shared.open(email)
+            
+            print ("Mail app opened")
+        } else {
+            print ("Mail app not opened")
         }
         
     }
     
-    /*
-    func convertStringToUIImage (image: String) -> UIImage {
+    @IBAction func deletePressed(_ sender: Any) {
         
-        //print(image)
+        let selected = Array(storedContacts.keys)[activeFriend]
         
-        let imageData = image.data(using: String.Encoding.utf8)
-        print ("imageData: ", imageData!)
+        //remove current key from dictionary
+        storedContacts.removeValue(forKey: selected)
         
-        let base64Image = imageData!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        print ("base64Image: ", base64Image)
-
-        let base64ImageAsData =  Data(base64Encoded: base64Image as String, options: NSData.Base64DecodingOptions())
-        print ("base64ImageAsData: ", base64ImageAsData!)
+        UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
         
-        let dataAsUIImage = UIImage(data: base64ImageAsData!)
-        print ("dataAsUIImage: ", dataAsUIImage)
+        //go back to home screen
+        _ = navigationController?.popViewController(animated: true)
         
-        if dataAsUIImage != nil {
-            
-            print (dataAsUIImage)
-            return dataAsUIImage!
-            
-        } else {
-            
-            print (dataAsUIImage)
-            return #imageLiteral(resourceName: "DefaultContact.jpg")
-            
-        }
- 
     }
- */
+    
+    override func viewDidLayoutSubviews() {
+        scrollView.isScrollEnabled = true
+        // Do any additional setup after loading the view
+        scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: 555)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
