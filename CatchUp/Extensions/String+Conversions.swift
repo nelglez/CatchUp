@@ -6,7 +6,7 @@
 //  Copyright © 2018 Token Solutions. All rights reserved.
 //
 
-import Swift
+import Foundation
 import UIKit
 
 extension String {

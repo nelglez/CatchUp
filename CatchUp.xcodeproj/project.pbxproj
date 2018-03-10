@@ -7,21 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F401FDDA20328527009F8632 /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401FDD920328527009F8632 /* ReminderViewController.swift */; };
 		F40CCE0A200AA07D0054CC5F /* String+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40CCE09200AA07D0054CC5F /* String+Conversions.swift */; };
 		F40CCE0C200AA0990054CC5F /* UIImage+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40CCE0B200AA0990054CC5F /* UIImage+Conversions.swift */; };
 		F40CCE10200C4FF60054CC5F /* DefaultPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = F40CCE0F200C4FF50054CC5F /* DefaultPhoto.png */; };
+		F422EEB1204F8A6200269AF9 /* Date+DayOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422EEB0204F8A6200269AF9 /* Date+DayOfWeek.swift */; };
+		F439D1CD2050DA7D00B43C15 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F439D1CC2050DA7D00B43C15 /* AboutViewController.swift */; };
+		F44F1978201C1E16008CE4DB /* CKRecord+Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */; };
 		F47101CF1FB5614A009D34EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101CE1FB5614A009D34EF /* AppDelegate.swift */; };
 		F47101D11FB5614A009D34EF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101D01FB5614A009D34EF /* HomeViewController.swift */; };
 		F47101D41FB5614A009D34EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47101D21FB5614A009D34EF /* Main.storyboard */; };
 		F47101D61FB5614A009D34EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47101D51FB5614A009D34EF /* Assets.xcassets */; };
 		F47101D91FB5614A009D34EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47101D71FB5614A009D34EF /* LaunchScreen.storyboard */; };
 		F47101E11FBD1F82009D34EF /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101E01FBD1F82009D34EF /* DetailsViewController.swift */; };
+		F48B7E9020376C8C00CE0016 /* check.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F48B7E8F20376C8C00CE0016 /* check.jpg */; };
+		F4B458FD201AD1B000635A77 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B458FC201AD1B000635A77 /* UIColor+Hex.swift */; };
+		F4B63814205472840084DBBE /* UIAlertController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B63813205472840084DBBE /* UIAlertController+Actions.swift */; };
+		F4B63816205484E90084DBBE /* Rounded Bell 1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B63815205484E90084DBBE /* Rounded Bell 1024x1024.png */; };
+		F4E2A0AF204CDAB300E6CD51 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */; };
+		F4E2A0B2204CDB5900E6CD51 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F401FDD920328527009F8632 /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		F40CCE09200AA07D0054CC5F /* String+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Conversions.swift"; sourceTree = "<group>"; };
 		F40CCE0B200AA0990054CC5F /* UIImage+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Conversions.swift"; sourceTree = "<group>"; };
 		F40CCE0F200C4FF50054CC5F /* DefaultPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultPhoto.png; sourceTree = "<group>"; };
+		F422EEB0204F8A6200269AF9 /* Date+DayOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+DayOfWeek.swift"; sourceTree = "<group>"; };
+		F439D1CC2050DA7D00B43C15 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		F44F1974201C0546008CE4DB /* CatchUp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatchUp.entitlements; sourceTree = "<group>"; };
+		F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Enum.swift"; sourceTree = "<group>"; };
 		F47101CB1FB5614A009D34EF /* CatchUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47101CE1FB5614A009D34EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F47101D01FB5614A009D34EF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -30,6 +45,12 @@
 		F47101D81FB5614A009D34EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F47101DA1FB5614A009D34EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F47101E01FBD1F82009D34EF /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		F48B7E8F20376C8C00CE0016 /* check.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = check.jpg; sourceTree = "<group>"; };
+		F4B458FC201AD1B000635A77 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		F4B63813205472840084DBBE /* UIAlertController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Actions.swift"; sourceTree = "<group>"; };
+		F4B63815205484E90084DBBE /* Rounded Bell 1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rounded Bell 1024x1024.png"; sourceTree = "<group>"; };
+		F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +69,10 @@
 			children = (
 				F40CCE09200AA07D0054CC5F /* String+Conversions.swift */,
 				F40CCE0B200AA0990054CC5F /* UIImage+Conversions.swift */,
+				F4B458FC201AD1B000635A77 /* UIColor+Hex.swift */,
+				F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */,
+				F422EEB0204F8A6200269AF9 /* Date+DayOfWeek.swift */,
+				F4B63813205472840084DBBE /* UIAlertController+Actions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -79,17 +104,32 @@
 		F47101CD1FB5614A009D34EF /* CatchUp */ = {
 			isa = PBXGroup;
 			children = (
+				F44F1974201C0546008CE4DB /* CatchUp.entitlements */,
 				F40CCE08200A9D460054CC5F /* Extensions */,
+				F439D1CC2050DA7D00B43C15 /* AboutViewController.swift */,
 				F47101D01FB5614A009D34EF /* HomeViewController.swift */,
 				F47101E01FBD1F82009D34EF /* DetailsViewController.swift */,
+				F401FDD920328527009F8632 /* ReminderViewController.swift */,
 				F47101D21FB5614A009D34EF /* Main.storyboard */,
 				F47101CE1FB5614A009D34EF /* AppDelegate.swift */,
 				F47101D51FB5614A009D34EF /* Assets.xcassets */,
 				F40CCE0F200C4FF50054CC5F /* DefaultPhoto.png */,
+				F48B7E8F20376C8C00CE0016 /* check.jpg */,
+				F4B63815205484E90084DBBE /* Rounded Bell 1024x1024.png */,
+				F4E2A0B0204CDB3300E6CD51 /* Services */,
 				F47101D71FB5614A009D34EF /* LaunchScreen.storyboard */,
 				F47101DA1FB5614A009D34EF /* Info.plist */,
 			);
 			path = CatchUp;
+			sourceTree = "<group>";
+		};
+		F4E2A0B0204CDB3300E6CD51 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */,
+				F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +169,12 @@
 							com.apple.Maps.iOS = {
 								enabled = 0;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 0;
+							};
 						};
 					};
 				};
@@ -157,6 +203,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F40CCE10200C4FF60054CC5F /* DefaultPhoto.png in Resources */,
+				F4B63816205484E90084DBBE /* Rounded Bell 1024x1024.png in Resources */,
+				F48B7E9020376C8C00CE0016 /* check.jpg in Resources */,
 				F47101D91FB5614A009D34EF /* LaunchScreen.storyboard in Resources */,
 				F47101D61FB5614A009D34EF /* Assets.xcassets in Resources */,
 				F47101D41FB5614A009D34EF /* Main.storyboard in Resources */,
@@ -173,6 +221,14 @@
 				F47101D11FB5614A009D34EF /* HomeViewController.swift in Sources */,
 				F47101CF1FB5614A009D34EF /* AppDelegate.swift in Sources */,
 				F40CCE0C200AA0990054CC5F /* UIImage+Conversions.swift in Sources */,
+				F44F1978201C1E16008CE4DB /* CKRecord+Enum.swift in Sources */,
+				F4E2A0B2204CDB5900E6CD51 /* AlertService.swift in Sources */,
+				F4E2A0AF204CDAB300E6CD51 /* NotificationService.swift in Sources */,
+				F439D1CD2050DA7D00B43C15 /* AboutViewController.swift in Sources */,
+				F401FDDA20328527009F8632 /* ReminderViewController.swift in Sources */,
+				F4B63814205472840084DBBE /* UIAlertController+Actions.swift in Sources */,
+				F422EEB1204F8A6200269AF9 /* Date+DayOfWeek.swift in Sources */,
+				F4B458FD201AD1B000635A77 /* UIColor+Hex.swift in Sources */,
 				F40CCE0A200AA07D0054CC5F /* String+Conversions.swift in Sources */,
 				F47101E11FBD1F82009D34EF /* DetailsViewController.swift in Sources */,
 			);
@@ -311,6 +367,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CatchUp/CatchUp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DJAHJZFYK7;
 				INFOPLIST_FILE = CatchUp/Info.plist;
@@ -326,6 +383,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CatchUp/CatchUp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DJAHJZFYK7;
 				INFOPLIST_FILE = CatchUp/Info.plist;

@@ -41,6 +41,21 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>Home</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>CatchUp List</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>About</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>About</string>
+		</dict>
+	</array>
 	<key>CFBundleDisplayName</key>
 	<string>CatchUp</string>
 </dict>
