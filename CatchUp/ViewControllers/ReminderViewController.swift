@@ -26,8 +26,12 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
     var anniversary: String = ""
     var contactPicture: String = ""
     
+    var delimiter = " "
+    
     //set who we have stored
     var storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
+    
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     @IBOutlet weak var preferenceTable: UITableView!
     
@@ -35,7 +39,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 6
+        return 5 //a row for every day, week, month, two months, three months, six months, year, and custom
         
     }
     
@@ -43,31 +47,24 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         
         let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "reminderCell")
         
+        cell.selectionStyle = .none
+        
         let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
-        if indexPath.row == 0 {
+        switch indexPath.row {
             
+        case 0:
             cell.textLabel?.text = "Every Day"
-            
-        } else if indexPath.row == 1 {
-            
+        case 1:
             cell.textLabel?.text = "Every Week"
-            
-        } else if indexPath.row == 2 {
-            
+        case 2:
             cell.textLabel?.text = "Every Month"
-            
-        } else if indexPath.row == 3 {
-            
-            cell.textLabel?.text = "Every Six Months"
-            
-        } else if indexPath.row == 4 {
-            
+        case 3:
             cell.textLabel?.text = "Every Year"
-            
-        } else if indexPath.row == 5 {
-            
+        case 4:
             cell.textLabel?.text = "Custom Reminder"
+        default:
+            cell.textLabel?.text = ""
             
         }
         
@@ -86,17 +83,12 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             datePicker.isHidden = true
             cell.accessoryType = .checkmark
             
-        } else if storedContacts[key].value[8] == "Every Six Months" && indexPath.row == 3 {
+        } else if storedContacts[key].value[8] == "Every Year" && indexPath.row == 3 {
             
             datePicker.isHidden = true
             cell.accessoryType = .checkmark
             
-        } else if storedContacts[key].value[8] == "Every Year" && indexPath.row == 4 {
-            
-            datePicker.isHidden = true
-            cell.accessoryType = .checkmark
-            
-        } else if storedContacts[key].value[8] == "Custom" && indexPath.row == 5 {
+        } else if storedContacts[key].value[8] == "Custom" && indexPath.row == 4 {
             
             datePicker.isHidden = false
             cell.accessoryType = .checkmark
@@ -127,6 +119,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             //removes any set reminders for this person, then sets the appropriate reminder
+                //every day
             if indexPath.row == 0 && cell.accessoryType == .checkmark {
                 
                 // Trigger selection feedback.
@@ -146,11 +139,11 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Day", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
                 
                 var components = DateComponents()
-                components.hour = 18 //every day at 6:00pm
+                components.hour = 7
+                components.minute = 45 //every day at 7:45am
                 
                 //timerRequest(with: 86400, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
-                
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
@@ -173,6 +166,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 print(storedContacts[key].value[8])
                 
+                //every week
             } else if indexPath.row == 1 && cell.accessoryType == .checkmark {
                 
                 // Trigger selection feedback.
@@ -192,8 +186,18 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Week", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
                 
                 var components = DateComponents()
-                components.weekday = Date().dayNumberOfWeek() //every week at the day the reminder is set
-                components.hour = 14 //2:00pm
+                //if it's Sunday, remind on Saturday to avoid same-day notifications
+                if Date().dayNumberOfWeek() == 1 {
+                    
+                    components.weekday = 7
+                    
+                } else {
+                    
+                    components.weekday = Date().dayNumberOfWeek()! - 1 //every week at the day before the reminder is set (to avoid same-day notifications)
+                    
+                }
+                components.hour = 14
+                components.minute = 30 //every week at 2:30pm
                 
                 //timerRequest(with: 604800, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
@@ -218,6 +222,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 print(storedContacts[key].value[8])
                 
+                //every month
             } else if indexPath.row == 2 && cell.accessoryType == .checkmark {
                 
                 // Trigger selection feedback.
@@ -237,8 +242,19 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Month", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
                 
                 var components = DateComponents()
-                components.day = Date().dayOfMonth()  //specific day of the month every month
-                components.hour = 16 //4:00pm
+                
+                if Date().dayNumberOfWeek() == 1 {
+                    
+                    components.weekday = 7 //Saturday
+                    
+                } else {
+                    
+                    components.weekday = Date().dayNumberOfWeekMinusOne()
+                    
+                }
+                components.weekOfMonth = Date().weekOfMonth()
+                components.hour = 16
+                components.minute = 30 //every month at 4:30pm
                 
                 //timerRequest(with: 2629746, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
@@ -246,6 +262,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
                 print(storedContacts[key].value[8])
+                
                 
             } else if indexPath.row == 2 && cell.accessoryType == .none {
                 
@@ -263,65 +280,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 print(storedContacts[key].value[8])
                 
+                //every year
             } else if indexPath.row == 3 && cell.accessoryType == .checkmark {
-                
-                // Trigger selection feedback.
-                feedbackGenerator?.selectionChanged()
-                
-                // Keep the generator in a prepared state.
-                feedbackGenerator?.prepare()
-                
-                datePicker.isHidden = true
-                
-                dateString = "180"
-                
-                NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
-                
-                let notificationIdentifier = randomString(length: 60)
-                
-                storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Six Months", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
-                
-                let weekOfYear = Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))
-                
-                var components = DateComponents()
-                //reminds every six months. Has to account for the year only having 52 weeks, so if it's above the 26th week (halfway through the year), subtract 26 weeks instead of adding
-                if weekOfYear > 26 {
-                    
-                    components.weekOfYear = weekOfYear-26
-                    
-                } else {
-                    
-                    components.weekOfYear = weekOfYear+26
-                    
-                }
-                
-                components.weekday = Date().dayNumberOfWeek()
-                components.hour = 10 //10:00am
-                
-                //timerRequest(with: 15778476, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
-                NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
-                
-                UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
-                
-                print(storedContacts[key].value[8])
-                
-            } else if indexPath.row == 3 && cell.accessoryType == .none {
-                
-                datePicker.isHidden = true
-                
-                dateString = ""
-                
-                NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
-                
-                let notificationIdentifier = ""
-                
-                storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "No Reminder Set", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
-                
-                UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
-                
-                print(storedContacts[key].value[8])
-                
-            } else if indexPath.row == 4 && cell.accessoryType == .checkmark {
                 
                 // Trigger selection feedback.
                 feedbackGenerator?.selectionChanged()
@@ -344,8 +304,18 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 var components = DateComponents()
                 components.weekOfYear = weekOfYear
-                components.weekday = Date().dayNumberOfWeek()
-                components.hour = 13 //1:00pm
+                
+                if Date().dayNumberOfWeek() == 1 {
+                    
+                    components.weekday = 7
+                    
+                } else {
+                    
+                    components.weekday = Date().dayNumberOfWeek()! - 1 //every year at the day before the reminder is set (to avoid same-day notifications)
+                    
+                }
+                components.hour = 13
+                components.minute = 30 //every year at 1:30pm
                 
                 //timerRequest(with: 31556952, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
@@ -354,7 +324,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 print(storedContacts[key].value[8])
                 
-            } else if indexPath.row == 4 && cell.accessoryType == .none {
+            } else if indexPath.row == 3 && cell.accessoryType == .none {
                 
                 datePicker.isHidden = true
                 
@@ -364,14 +334,14 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 let notificationIdentifier = ""
                 
-                storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
+                storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "No Reminder Set", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
                 print(storedContacts[key].value[8])
                 
-                //not working either
-            } else if indexPath.row == 5 && cell.accessoryType == .checkmark {
+                //custom date
+            } else if indexPath.row == 4 && cell.accessoryType == .checkmark {
                 
                 // Trigger selection feedback.
                 feedbackGenerator?.selectionChanged()
@@ -419,16 +389,25 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 var components = DateComponents()
                 components.month = month
-                components.day = day
+                
+                if Date().dayOfMonth() == 1 {
+                    
+                    components.day = 28
+                    
+                } else {
+                    
+                    components.day = day! - 1 //specific day of the month minus one to avoid same-day notification
+                    
+                }
                 components.year = fullYear
-                components.hour = 9 //9:00am on the chosen day
+                components.hour = 11 //11:00am on the chosen day
                 
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 print(storedContacts[key].value[8])
                 
-            } else if indexPath.row == 5 && cell.accessoryType == .none {
+            } else if indexPath.row == 4 && cell.accessoryType == .none {
                 
                 datePicker.isHidden = true
                 
@@ -536,6 +515,11 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         //NotificationService.shared.notification.removeAllPendingNotificationRequests()
         
         let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        
+        let fullName = storedContacts[key].key
+        let firstName = fullName.components(separatedBy: delimiter)
+        
+        descriptionLabel.text? = "Receive a notification to CatchUp with \(firstName[0]):"
         
         //if there is a stored anniversary in the dictionary, set a reminder for their anniversary. Anniversary is stored just as MM-DD, no year
         if storedContacts[key].value[7] != "" {

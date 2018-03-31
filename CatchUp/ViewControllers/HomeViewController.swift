@@ -63,6 +63,9 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
         //If the user has tapped 'Don't Allow' when requested
         case .denied:
+            let alert = UIAlertController(title: "Cannot Add Contacts", message: "🤭 You denied CatchUp access to your Contacts. To change this, go the Settings app, scroll down to CatchUp, and turn on Allow CatchUp to Access Contacts", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             print("We need access to your Contacts to remind you to CatchUp with your friends!")
             
         //not sure what this is
@@ -318,7 +321,17 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
                 
             }
             
-            storedContacts[fullName] = [primaryPhoneNumber, secondaryPhoneNumber, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, reminderType, reminderPreference, notificationIdentifier, contactPicture]
+            //if the contacts is already stored in the dictionary, do nothing
+            //if the contact is not already stored in the dictionary, store it in the dictionary
+            if storedContacts[fullName] != nil {
+                
+                print("already stored in dictionary")
+                
+            } else {
+                
+                storedContacts[fullName] = [primaryPhoneNumber, secondaryPhoneNumber, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, reminderType, reminderPreference, notificationIdentifier, contactPicture]
+                
+            }
             
             UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
             //saveToiCloud(contactData: selectedContacts)
@@ -379,10 +392,10 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             let cellImageView = cell.imageView!
             
             //returns name (key) of selected
-            let contactName = Array(storedContacts.keys)[indexPath.row]
+            let keys = Array(storedContacts.keys)[indexPath.row]
             
             //returns phone number (value) of selected
-            let contactNumber = Array(storedContacts.values)[indexPath.row]
+            let values = Array(storedContacts.values)[indexPath.row]
             
             //returns string of contact photo (or defaultContact.jpg) of selected
             let contactPictureString = Array(storedContacts.values)[indexPath.row].last
@@ -408,10 +421,10 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
             //cell title
             cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-            cell.textLabel?.text = contactName
+            cell.textLabel?.text = keys
             
             //cell subtitle
-            cell.detailTextLabel?.text = contactNumber[8]
+            cell.detailTextLabel?.text = values[8]
             
             cell.clipsToBounds = true
             
@@ -508,7 +521,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
 
         activeFriend = indexPath.row
         
-        let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell!
+        let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell?
         
         print(currentCell?.textLabel!.text! ?? "None")
         

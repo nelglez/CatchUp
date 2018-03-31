@@ -12,6 +12,9 @@ import UserNotifications
 class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     
     private override init() {}
+    
+    var storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
+    
     static let shared = NotificationService() //this is a singleton apparently. allows for security by not allowing someone to create a new NotificationService object. You have to use the pre-made shared singleton
     
     let notification = UNUserNotificationCenter.current()
@@ -53,6 +56,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     
     //TimeInterval is just a double
     //timer push notification
+    //not using this one anymore
     func timerRequest(with interval: TimeInterval, contactName: String, identifier: String) {
         
         let content = UNMutableNotificationContent()
@@ -71,9 +75,36 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     //date push notification
     func dateRequest(with components: DateComponents, contactName: String, identifier: String) {
         
+        let randomNumberZeroToNine = Int(arc4random_uniform(10))
+        
         let content = UNMutableNotificationContent()
         content.title = "👋 Time to CatchUp with \(contactName)!"
-        content.body = "Now you can be best buddies again"
+        switch randomNumberZeroToNine {
+            
+        case 0:
+            content.body = "Now you can be best buddies again"
+        case 1:
+            content.body = "A little birdy told me they really miss you"
+        case 2:
+            content.body = "I heard they wrote in their diary about you last week 😉"
+        case 3:
+            content.body = "You're a good friend. Go you. Tell this person to get CatchUp too so it's not always you"
+        case 4:
+            content.body = "It's been a while - take some time to check in"
+        case 5:
+            content.body = "Remember to keep in touch with the people that matter most"
+        case 6:
+            content.body = "You know what they say: 'A CatchUp message a day keeps the needy friends at bay'"
+        case 7:
+            content.body = "Have you written a physical letter in a while? Give that a try this time, people really like that"
+        case 8:
+            content.body = "Here's that reminder you set to check in with someone important. Maybe you'll make their day"
+        case 9:
+            content.body = "Once a good person, always a good person (you are a good person, and probably so is the person you want to be reminded to CatchUp with)"
+        default:
+            content.body = "Today is the perfect day to get back in touch"
+            
+        }
         content.sound = .default()
         content.badge = 1
         
@@ -88,8 +119,8 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func anniversaryRequest(with components: DateComponents, contactName: String, identifier: String) {
         
         let content = UNMutableNotificationContent()
-        content.title = "😍 Your anniversary with \(contactName) is coming up soon!"
-        content.body = "The specific date is stored in CatchUp. Don't worry, there's still time to plan something amazing."
+        content.title = "😍 Anniversary detected!"
+        content.body = "Your anniversary with \(contactName) is coming up soon. The date is stored in CatchUp. Don't worry, there's still time to plan something amazing."
         content.sound = .default()
         content.badge = 1
         
@@ -104,8 +135,8 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func birthdayRequest(with components: DateComponents, contactName: String, identifier: String) {
         
         let content = UNMutableNotificationContent()
-        content.title = "🎂 \(contactName)'s birthday is almost here!"
-        content.body = "The specific date is stored in CatchUp. Now you can be the first friend to wish them a happy one!"
+        content.title = "🎂 It's almost \(contactName)'s birthday!"
+        content.body = "Their birthday is stored in CatchUp. Now you can be the first friend to wish them a happy one!"
         content.sound = .default()
         content.badge = 1
         

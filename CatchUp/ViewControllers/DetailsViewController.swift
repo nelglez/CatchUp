@@ -15,8 +15,11 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //contact picture
     @IBOutlet weak var contactPicture: UIImageView!
     
-    //labels
+    //contact name
     @IBOutlet weak var contactName: UILabel!
+    
+    //contact preference
+    @IBOutlet weak var contactPreference: UILabel!
     
     //set who we have stored
     var storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
@@ -25,6 +28,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         
         let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        
+        contactPreference.text = "Preference: \(storedContacts[key].value[8])"
         
         contactName.text = storedContacts[key].key
         
@@ -78,6 +83,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
         let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "detailCell")
+        
+        cell.selectionStyle = .none
         
         let details = storedContacts.values[key][indexPath.row]
         
@@ -312,6 +319,10 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController?.navigationBar.backgroundColor = UIColor(rgb: 0xFAFAFF)
         
         storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
+        
+        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        
+        contactPreference.text = "Preference: \(storedContacts[key].value[8])"
     }
 
     override func didReceiveMemoryWarning() {

@@ -45,7 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        print("Application did finish launching")
         return true
     }
 
@@ -64,7 +63,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        
+        if launchedBefore  {
+            print("This is not first launch.")
+        } else {
+            print("This is first launch.")
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            UserDefaults.standard.synchronize()
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let vc = mainStoryboard.instantiateViewController(withIdentifier: "WalkthroughScreenOne")
+            self.window?.makeKeyAndVisible()
+            self.window?.rootViewController?.present(vc, animated: false, completion: nil)
+            
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
