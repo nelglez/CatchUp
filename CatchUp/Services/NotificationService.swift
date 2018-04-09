@@ -78,7 +78,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         let randomNumberZeroToNine = Int(arc4random_uniform(10))
         
         let content = UNMutableNotificationContent()
-        content.title = "👋 Time to CatchUp with \(contactName)!"
+        content.title = "👋 CatchUp with \(contactName)!"
         switch randomNumberZeroToNine {
             
         case 0:
@@ -86,25 +86,25 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         case 1:
             content.body = "A little birdy told me they really miss you"
         case 2:
-            content.body = "I heard they wrote in their diary about you last week 😉"
+            content.body = "It's time to check back in"
         case 3:
             content.body = "You're a good friend. Go you. Tell this person to get CatchUp too so it's not always you"
         case 4:
-            content.body = "It's been a while - take some time to check in"
+            content.body = "Today is the perfect day to get back in touch"
         case 5:
             content.body = "Remember to keep in touch with the people that matter most"
         case 6:
             content.body = "You know what they say: 'A CatchUp message a day keeps the needy friends at bay'"
         case 7:
-            content.body = "Have you written a physical letter in a while? Give that a try this time, people really like that"
+            content.body = "Have you written a physical letter in a while? Give that a try this time, people like that"
         case 8:
             content.body = "Here's that reminder you set to check in with someone important. Maybe you'll make their day"
         case 9:
             content.body = "Once a good person, always a good person (you are a good person, and probably so is the person you want to be reminded to CatchUp with)"
         default:
-            content.body = "Today is the perfect day to get back in touch"
+            content.body = "Keep in touch"
             
-        }
+        }                                                   
         content.sound = .default()
         content.badge = 1
         

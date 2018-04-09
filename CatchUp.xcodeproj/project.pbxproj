@@ -17,6 +17,7 @@
 		F443C31E20703C06000E9FA8 /* Walkthrough5.png in Resources */ = {isa = PBXBuildFile; fileRef = F443C31C20703C06000E9FA8 /* Walkthrough5.png */; };
 		F443C31F20703C06000E9FA8 /* Walkthrough4.png in Resources */ = {isa = PBXBuildFile; fileRef = F443C31D20703C06000E9FA8 /* Walkthrough4.png */; };
 		F44F1978201C1E16008CE4DB /* CKRecord+Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */; };
+		F4573E34207867E500A92667 /* IAPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4573E33207867E500A92667 /* IAPService.swift */; };
 		F47101CF1FB5614A009D34EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101CE1FB5614A009D34EF /* AppDelegate.swift */; };
 		F47101D11FB5614A009D34EF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101D01FB5614A009D34EF /* HomeViewController.swift */; };
 		F47101D41FB5614A009D34EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47101D21FB5614A009D34EF /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		F443C31D20703C06000E9FA8 /* Walkthrough4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough4.png; sourceTree = "<group>"; };
 		F44F1974201C0546008CE4DB /* CatchUp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatchUp.entitlements; sourceTree = "<group>"; };
 		F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Enum.swift"; sourceTree = "<group>"; };
+		F4573E33207867E500A92667 /* IAPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPService.swift; sourceTree = "<group>"; };
 		F47101CB1FB5614A009D34EF /* CatchUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47101CE1FB5614A009D34EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F47101D01FB5614A009D34EF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			children = (
 				F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */,
 				F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */,
+				F4573E33207867E500A92667 /* IAPService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				F47101CF1FB5614A009D34EF /* AppDelegate.swift in Sources */,
 				F40CCE0C200AA0990054CC5F /* UIImage+Conversions.swift in Sources */,
 				F44F1978201C1E16008CE4DB /* CKRecord+Enum.swift in Sources */,
+				F4573E34207867E500A92667 /* IAPService.swift in Sources */,
 				F4E2A0B2204CDB5900E6CD51 /* AlertService.swift in Sources */,
 				F4E2A0AF204CDAB300E6CD51 /* NotificationService.swift in Sources */,
 				F439D1CD2050DA7D00B43C15 /* AboutViewController.swift in Sources */,
