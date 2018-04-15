@@ -14,7 +14,6 @@
 		F422EEB1204F8A6200269AF9 /* Date+SubDays.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422EEB0204F8A6200269AF9 /* Date+SubDays.swift */; };
 		F439D1CD2050DA7D00B43C15 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F439D1CC2050DA7D00B43C15 /* AboutViewController.swift */; };
 		F443C313206FDF2A000E9FA8 /* Walkthrough1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = F443C312206FDF29000E9FA8 /* Walkthrough1.jpeg */; };
-		F443C31E20703C06000E9FA8 /* Walkthrough5.png in Resources */ = {isa = PBXBuildFile; fileRef = F443C31C20703C06000E9FA8 /* Walkthrough5.png */; };
 		F443C31F20703C06000E9FA8 /* Walkthrough4.png in Resources */ = {isa = PBXBuildFile; fileRef = F443C31D20703C06000E9FA8 /* Walkthrough4.png */; };
 		F44F1978201C1E16008CE4DB /* CKRecord+Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */; };
 		F4573E34207867E500A92667 /* IAPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4573E33207867E500A92667 /* IAPService.swift */; };
@@ -30,6 +29,7 @@
 		F4B63816205484E90084DBBE /* Rounded Bell 1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B63815205484E90084DBBE /* Rounded Bell 1024x1024.png */; };
 		F4BE9304206F03100033FE80 /* Walkthrough3.png in Resources */ = {isa = PBXBuildFile; fileRef = F4BE92FD206F030F0033FE80 /* Walkthrough3.png */; };
 		F4BE9306206F03100033FE80 /* Walkthrough2.png in Resources */ = {isa = PBXBuildFile; fileRef = F4BE92FF206F030F0033FE80 /* Walkthrough2.png */; };
+		F4D830BA20841BEE008F30B7 /* Walkthrough5.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D830B920841BEE008F30B7 /* Walkthrough5.png */; };
 		F4E2A0AF204CDAB300E6CD51 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */; };
 		F4E2A0B2204CDB5900E6CD51 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */; };
 /* End PBXBuildFile section */
@@ -42,7 +42,6 @@
 		F422EEB0204F8A6200269AF9 /* Date+SubDays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+SubDays.swift"; sourceTree = "<group>"; };
 		F439D1CC2050DA7D00B43C15 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		F443C312206FDF29000E9FA8 /* Walkthrough1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Walkthrough1.jpeg; sourceTree = "<group>"; };
-		F443C31C20703C06000E9FA8 /* Walkthrough5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough5.png; sourceTree = "<group>"; };
 		F443C31D20703C06000E9FA8 /* Walkthrough4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough4.png; sourceTree = "<group>"; };
 		F44F1974201C0546008CE4DB /* CatchUp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatchUp.entitlements; sourceTree = "<group>"; };
 		F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Enum.swift"; sourceTree = "<group>"; };
@@ -61,6 +60,7 @@
 		F4B63815205484E90084DBBE /* Rounded Bell 1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rounded Bell 1024x1024.png"; sourceTree = "<group>"; };
 		F4BE92FD206F030F0033FE80 /* Walkthrough3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough3.png; sourceTree = "<group>"; };
 		F4BE92FF206F030F0033FE80 /* Walkthrough2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough2.png; sourceTree = "<group>"; };
+		F4D830B920841BEE008F30B7 /* Walkthrough5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough5.png; sourceTree = "<group>"; };
 		F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,7 +147,7 @@
 				F4BE92FF206F030F0033FE80 /* Walkthrough2.png */,
 				F4BE92FD206F030F0033FE80 /* Walkthrough3.png */,
 				F443C31D20703C06000E9FA8 /* Walkthrough4.png */,
-				F443C31C20703C06000E9FA8 /* Walkthrough5.png */,
+				F4D830B920841BEE008F30B7 /* Walkthrough5.png */,
 				F40CCE0F200C4FF50054CC5F /* DefaultPhoto.png */,
 				F48B7E8F20376C8C00CE0016 /* Check.jpg */,
 				F4B63815205484E90084DBBE /* Rounded Bell 1024x1024.png */,
@@ -248,8 +248,8 @@
 				F443C313206FDF2A000E9FA8 /* Walkthrough1.jpeg in Resources */,
 				F4BE9304206F03100033FE80 /* Walkthrough3.png in Resources */,
 				F443C31F20703C06000E9FA8 /* Walkthrough4.png in Resources */,
+				F4D830BA20841BEE008F30B7 /* Walkthrough5.png in Resources */,
 				F4B63816205484E90084DBBE /* Rounded Bell 1024x1024.png in Resources */,
-				F443C31E20703C06000E9FA8 /* Walkthrough5.png in Resources */,
 				F4BE9306206F03100033FE80 /* Walkthrough2.png in Resources */,
 				F48B7E9020376C8C00CE0016 /* Check.jpg in Resources */,
 				F47101D91FB5614A009D34EF /* LaunchScreen.storyboard in Resources */,
