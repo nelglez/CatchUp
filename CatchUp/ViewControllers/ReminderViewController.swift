@@ -54,15 +54,15 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         switch indexPath.row {
             
         case 0:
-            cell.textLabel?.text = "Every Day"
+            cell.textLabel?.text = "Every Day (7:45 a.m.)"
         case 1:
-            cell.textLabel?.text = "Every Week"
+            cell.textLabel?.text = "Every Week (2:30 p.m.)"
         case 2:
-            cell.textLabel?.text = "Every Month"
+            cell.textLabel?.text = "Every Month (4:30 p.m.)"
         case 3:
-            cell.textLabel?.text = "Every Year"
+            cell.textLabel?.text = "Every Year (6:30 p.m.)"
         case 4:
-            cell.textLabel?.text = "Custom Reminder"
+            cell.textLabel?.text = "Custom Reminder (11:00 a.m.)"
         default:
             cell.textLabel?.text = ""
             
@@ -314,8 +314,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                     components.weekday = Date().dayNumberOfWeek()! - 1 //every year at the day before the reminder is set (to avoid same-day notifications)
                     
                 }
-                components.hour = 13
-                components.minute = 30 //every year at 1:30pm
+                components.hour = 18
+                components.minute = 30 //every year at 6:30pm
                 
                 //timerRequest(with: 31556952, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
@@ -388,19 +388,11 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 print(month!, "/", day!, "/", fullYear!)
                 
                 var components = DateComponents()
-                components.month = month
-                
-                if Date().dayOfMonth() == 1 {
-                    
-                    components.day = 28
-                    
-                } else {
-                    
-                    components.day = day! - 1 //specific day of the month minus one to avoid same-day notification
-                    
-                }
                 components.year = fullYear
-                components.hour = 11 //11:00am on the chosen day
+                components.month = month
+                components.day = day
+                components.hour = 11
+                components.minute = 00 //11:00am on the chosen day
                 
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 
@@ -468,9 +460,11 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         print(month!, "/", day!, "/", fullYear!)
         
         var components = DateComponents()
+        components.year = fullYear
         components.month = month
         components.day = day
-        components.year = fullYear
+        components.hour = 11
+        components.minute = 00 //11:00am on the chosen day
         
         NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
         
