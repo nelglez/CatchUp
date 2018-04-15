@@ -26,7 +26,7 @@
                                     <constraint firstAttribute="height" constant="559" id="gCD-I6-29h"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="ui6-rX-fXG" detailTextLabel="RDZ-2T-lES" imageView="2N0-Yu-8Ue" style="IBUITableViewCellStyleSubtitle" id="wFz-Md-07F">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="ui6-rX-fXG" detailTextLabel="RDZ-2T-lES" imageView="2N0-Yu-8Ue" style="IBUITableViewCellStyleSubtitle" id="wFz-Md-07F">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wFz-Md-07F" id="FYm-SX-mys">
@@ -828,7 +828,7 @@
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" id="vNQ-Cu-qag">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="D1w-sb-aeX">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="D1w-sb-aeX">
                                             <rect key="frame" x="16" y="0.0" width="343" height="36"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
@@ -846,7 +846,7 @@
                                 <rect key="frame" x="0.0" y="285" width="375" height="408"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="detailCell" textLabel="9hD-w1-wCg" detailTextLabel="PFT-yq-fbi" style="IBUITableViewCellStyleSubtitle" id="kSH-7G-rYD">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="detailCell" textLabel="9hD-w1-wCg" detailTextLabel="PFT-yq-fbi" style="IBUITableViewCellStyleSubtitle" id="kSH-7G-rYD">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kSH-7G-rYD" id="vsP-Lk-ztv">
@@ -921,7 +921,7 @@
                                 <color key="textColor" red="1" green="0.57457399368286133" blue="0.0019781978335231543" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="p4W-dm-BVP">
+                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="p4W-dm-BVP">
                                 <rect key="frame" x="0.0" y="596" width="375" height="216"/>
                                 <date key="date" timeIntervalSinceReferenceDate="540859495.35001194">
                                     <!--2018-02-20 22:44:55 +0000-->
@@ -943,7 +943,7 @@
                                 <rect key="frame" x="0.0" y="177" width="375" height="411"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="reminderCell" textLabel="kGl-kb-H5I" style="IBUITableViewCellStyleDefault" id="4cK-dT-qRY">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="reminderCell" textLabel="kGl-kb-H5I" style="IBUITableViewCellStyleDefault" id="4cK-dT-qRY">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4cK-dT-qRY" id="NqN-ze-No1">

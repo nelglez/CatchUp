@@ -62,7 +62,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         case 3:
             cell.textLabel?.text = "Every Year (6:30 p.m.)"
         case 4:
-            cell.textLabel?.text = "Custom Reminder (11:00 a.m.)"
+            cell.textLabel?.text = "Custom Reminder"
         default:
             cell.textLabel?.text = ""
             
@@ -352,14 +352,14 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 datePicker.isHidden = false
                 
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MM/dd/yy"
+                dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
                 dateString = dateFormatter.string(from: datePicker.date)
+                
+                let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
                 let notificationIdentifier = randomString(length: 60)
-                
-                let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
                 
                 storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Custom", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
                 
@@ -369,30 +369,42 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 let month = Int(stringMonth) //convert string to int so we can use it in our date components call for dateRequest()
                 
                 let start = dateString.index(dateString.startIndex, offsetBy: 3)
-                let end = dateString.index(dateString.endIndex, offsetBy: -3)
+                let end = dateString.index(dateString.endIndex, offsetBy: -14)
                 let range = start..<end
                 let substringDay = dateString[range]
                 let stringDay = String(substringDay) //convert substring to string so it lets go of substring memory
                 let day = Int(stringDay) //convert string to int so we can use it in our date components call for dateRequest()
                 
-                let endIndex = dateString.index(dateString.endIndex, offsetBy: -2)
-                let substringYear = dateString.suffix(from: endIndex)
+                let yearStartIndex = dateString.index(dateString.startIndex, offsetBy: 6)
+                let endIndex = dateString.index(dateString.endIndex, offsetBy: -9)
+                let range2 = yearStartIndex..<endIndex
+                let substringYear = dateString[range2]
                 let stringYear = String(substringYear) //convert substring to string so it lets go of substring memory
                 let year = Int(stringYear) //convert string to int so we can use it in our date components call for dateRequest()
                 
-                let year2000 = "20"
-                let twoThousandAnd = Int(year2000)
-                let stringFullYear = "\(twoThousandAnd ?? 20)\(year ?? 99)"
-                let fullYear = Int(stringFullYear)
+                let hourStartIndex = dateString.index(dateString.startIndex, offsetBy: 11)
+                let hourEndIndex = dateString.index(dateString.endIndex, offsetBy: -6)
+                let range3 = hourStartIndex..<hourEndIndex
+                let substringHour = dateString[range3]
+                let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+                let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
                 
-                print(month!, "/", day!, "/", fullYear!)
+                let minuteStartIndex = dateString.index(dateString.startIndex, offsetBy: 14)
+                let minuteEndIndex = dateString.index(dateString.endIndex, offsetBy: -3)
+                let range4 = minuteStartIndex..<minuteEndIndex
+                let substringMinute = dateString[range4]
+                let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+                let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
+                
+                //print(month!, "/", day!, "/", year!, " ", hour!, ":", minute!)
                 
                 var components = DateComponents()
-                components.year = fullYear
                 components.month = month
                 components.day = day
-                components.hour = 11
-                components.minute = 00 //11:00am on the chosen day
+                components.year = year
+                components.hour = hour
+                components.minute = minute //custom time on custom day
+                components.second = 00
                 
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 
@@ -424,7 +436,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func pickerMoved(_ sender: Any) {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yy"
+        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
         dateString = dateFormatter.string(from: datePicker.date)
         
         let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
@@ -441,30 +453,42 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         let month = Int(stringMonth) //convert string to int so we can use it in our date components call for dateRequest()
         
         let start = dateString.index(dateString.startIndex, offsetBy: 3)
-        let end = dateString.index(dateString.endIndex, offsetBy: -3)
+        let end = dateString.index(dateString.endIndex, offsetBy: -14)
         let range = start..<end
         let substringDay = dateString[range]
         let stringDay = String(substringDay) //convert substring to string so it lets go of substring memory
         let day = Int(stringDay) //convert string to int so we can use it in our date components call for dateRequest()
         
-        let endIndex = dateString.index(dateString.endIndex, offsetBy: -2)
-        let substringYear = dateString.suffix(from: endIndex)
+        let yearStartIndex = dateString.index(dateString.startIndex, offsetBy: 6)
+        let endIndex = dateString.index(dateString.endIndex, offsetBy: -9)
+        let range2 = yearStartIndex..<endIndex
+        let substringYear = dateString[range2]
         let stringYear = String(substringYear) //convert substring to string so it lets go of substring memory
         let year = Int(stringYear) //convert string to int so we can use it in our date components call for dateRequest()
         
-        let year2000 = "20"
-        let twoThousandAnd = Int(year2000)
-        let stringFullYear = "\(twoThousandAnd ?? 20)\(year ?? 99)"
-        let fullYear = Int(stringFullYear)
+        let hourStartIndex = dateString.index(dateString.startIndex, offsetBy: 11)
+        let hourEndIndex = dateString.index(dateString.endIndex, offsetBy: -6)
+        let range3 = hourStartIndex..<hourEndIndex
+        let substringHour = dateString[range3]
+        let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+        let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
         
-        print(month!, "/", day!, "/", fullYear!)
+        let minuteStartIndex = dateString.index(dateString.startIndex, offsetBy: 14)
+        let minuteEndIndex = dateString.index(dateString.endIndex, offsetBy: -3)
+        let range4 = minuteStartIndex..<minuteEndIndex
+        let substringMinute = dateString[range4]
+        let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+        let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        //print(month!, "/", day!, "/", year!, " ", hour!, ":", minute!)
         
         var components = DateComponents()
-        components.year = fullYear
         components.month = month
         components.day = day
-        components.hour = 11
-        components.minute = 00 //11:00am on the chosen day
+        components.year = year
+        components.hour = hour
+        components.minute = minute //custom time on custom day
+        components.second = 00
         
         NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
         
@@ -616,7 +640,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         if storedContacts[key].value[9] != "" {
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yy" //Your date format
+            dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss" //Your date format
             dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
             let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
             

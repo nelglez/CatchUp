@@ -104,7 +104,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         default:
             content.body = "Keep in touch"
             
-        }                                                   
+        }
         content.sound = .default()
         content.badge = 1
         
