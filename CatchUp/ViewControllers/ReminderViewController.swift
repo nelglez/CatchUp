@@ -26,6 +26,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
     var anniversary: String = ""
     var contactPicture: String = ""
     
+    //var originalPerson: Int = 0
+    
     var delimiter = " "
     
     //set who we have stored
@@ -35,7 +37,12 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var preferenceTable: UITableView!
     
+    @IBOutlet weak var dayDatePicker: UIDatePicker!
+    @IBOutlet weak var weekDatePicker: UIDatePicker!
+    @IBOutlet weak var monthDatePicker: UIDatePicker!
+    @IBOutlet weak var yearDatePicker: UIDatePicker!
     @IBOutlet weak var datePicker: UIDatePicker!
+     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -54,13 +61,13 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         switch indexPath.row {
             
         case 0:
-            cell.textLabel?.text = "Every Day (7:45 a.m.)"
+            cell.textLabel?.text = "Every Day"
         case 1:
-            cell.textLabel?.text = "Every Week (2:30 p.m.)"
+            cell.textLabel?.text = "Every Week"
         case 2:
-            cell.textLabel?.text = "Every Month (4:30 p.m.)"
+            cell.textLabel?.text = "Every Month"
         case 3:
-            cell.textLabel?.text = "Every Year (6:30 p.m.)"
+            cell.textLabel?.text = "Every Year"
         case 4:
             cell.textLabel?.text = "Custom Reminder"
         default:
@@ -70,27 +77,52 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         
         if storedContacts[key].value[8] == "Every Day" && indexPath.row == 0 {
             
+            dayDatePicker.isHidden = false
+            weekDatePicker.isHidden = true
+            monthDatePicker.isHidden = true
+            yearDatePicker.isHidden = true
             datePicker.isHidden = true
+            
             cell.accessoryType = .checkmark
             
         } else if storedContacts[key].value[8] == "Every Week" && indexPath.row == 1 {
             
+            dayDatePicker.isHidden =  true
+            weekDatePicker.isHidden = false
+            monthDatePicker.isHidden = true
+            yearDatePicker.isHidden = true
             datePicker.isHidden = true
+            
             cell.accessoryType = .checkmark
             
         } else if storedContacts[key].value[8] == "Every Month" && indexPath.row == 2 {
             
+            dayDatePicker.isHidden =  true
+            weekDatePicker.isHidden = true
+            monthDatePicker.isHidden = false
+            yearDatePicker.isHidden = true
             datePicker.isHidden = true
+            
             cell.accessoryType = .checkmark
             
         } else if storedContacts[key].value[8] == "Every Year" && indexPath.row == 3 {
             
+            dayDatePicker.isHidden =  true
+            weekDatePicker.isHidden = true
+            monthDatePicker.isHidden = true
+            yearDatePicker.isHidden = false
             datePicker.isHidden = true
+            
             cell.accessoryType = .checkmark
             
         } else if storedContacts[key].value[8] == "Custom" && indexPath.row == 4 {
             
+            dayDatePicker.isHidden =  true
+            weekDatePicker.isHidden = true
+            monthDatePicker.isHidden = true
+            yearDatePicker.isHidden = true
             datePicker.isHidden = false
+            
             cell.accessoryType = .checkmark
             
         }
@@ -107,6 +139,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             
             let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
             
+            //print("current person: \(originalPerson)")
+            
             if cell.accessoryType == .checkmark {
                 
                 cell.accessoryType = .none
@@ -119,8 +153,10 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             //removes any set reminders for this person, then sets the appropriate reminder
+            
                 //every day
             if indexPath.row == 0 && cell.accessoryType == .checkmark {
+                print(activeFriend)
                 
                 // Trigger selection feedback.
                 feedbackGenerator?.selectionChanged()
@@ -128,9 +164,16 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
+                dayDatePicker.isHidden = false
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = true
                 
                 dateString = "1"
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm:ss"
+                dateString = dateFormatter.string(from: datePicker.date)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
@@ -138,20 +181,40 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Day", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
                 
+                let startIndex = dateString.index(dateString.startIndex, offsetBy: 2)
+                let substringHour = dateString.prefix(upTo: startIndex)
+                let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+                let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
+                
+                let start = dateString.index(dateString.startIndex, offsetBy: 3)
+                let end = dateString.index(dateString.endIndex, offsetBy: -3)
+                let range = start..<end
+                let substringMinute = dateString[range]
+                let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+                let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
+                
                 var components = DateComponents()
-                components.hour = 7
-                components.minute = 45 //every day at 7:45am
+                components.hour = hour
+                components.minute = minute
                 
                 //timerRequest(with: 86400, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
+                //activeFriend = originalPerson
+                //print(activeFriend)
+                
                 print(storedContacts[key].value[8])
+                print(storedContacts[key].value[9])
                 
                 //removes the reminder that was set before and updates the dictionary
             } else if indexPath.row == 0 && cell.accessoryType == .none {
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = true
                 
                 dateString = ""
@@ -175,15 +238,34 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = false
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = true
                 
                 dateString = "7"
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm:ss"
+                dateString = dateFormatter.string(from: datePicker.date)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
                 let notificationIdentifier = randomString(length: 60)
                 
                 storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Week", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
+                
+                let startIndex = dateString.index(dateString.startIndex, offsetBy: 2)
+                let substringHour = dateString.prefix(upTo: startIndex)
+                let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+                let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
+                
+                let start = dateString.index(dateString.startIndex, offsetBy: 3)
+                let end = dateString.index(dateString.endIndex, offsetBy: -3)
+                let range = start..<end
+                let substringMinute = dateString[range]
+                let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+                let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
                 
                 var components = DateComponents()
                 //if it's Sunday, remind on Saturday to avoid same-day notifications
@@ -193,11 +275,11 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                     
                 } else {
                     
-                    components.weekday = Date().dayNumberOfWeek()! - 1 //every week at the day before the reminder is set (to avoid same-day notifications)
+                    components.weekday = Date().dayNumberOfWeekMinusOne() //every week at the day before the reminder is set (to avoid same-day notifications)
                     
                 }
-                components.hour = 14
-                components.minute = 30 //every week at 2:30pm
+                components.hour = hour
+                components.minute = minute
                 
                 //timerRequest(with: 604800, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
@@ -205,9 +287,14 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
                 print(storedContacts[key].value[8])
+                print(storedContacts[key].value[9])
                 
             } else if indexPath.row == 1 && cell.accessoryType == .none {
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = true
                 
                 dateString = ""
@@ -231,15 +318,34 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = false
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = true
                 
                 dateString = "30"
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm:ss"
+                dateString = dateFormatter.string(from: datePicker.date)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
                 let notificationIdentifier = randomString(length: 60)
                 
                 storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Month", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
+                
+                let startIndex = dateString.index(dateString.startIndex, offsetBy: 2)
+                let substringHour = dateString.prefix(upTo: startIndex)
+                let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+                let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
+                
+                let start = dateString.index(dateString.startIndex, offsetBy: 3)
+                let end = dateString.index(dateString.endIndex, offsetBy: -3)
+                let range = start..<end
+                let substringMinute = dateString[range]
+                let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+                let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
                 
                 var components = DateComponents()
                 
@@ -252,9 +358,18 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                     components.weekday = Date().dayNumberOfWeekMinusOne()
                     
                 }
-                components.weekOfMonth = Date().weekOfMonth()
-                components.hour = 16
-                components.minute = 30 //every month at 4:30pm
+                
+                if Date().weekOfMonth() == 5 {
+                    
+                    components.weekOfMonth = 4
+                    
+                } else {
+                    
+                    components.weekOfMonth = Date().weekOfMonth()
+                    
+                }
+                components.hour = hour
+                components.minute = minute
                 
                 //timerRequest(with: 2629746, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
@@ -262,10 +377,15 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
                 print(storedContacts[key].value[8])
+                print(storedContacts[key].value[9])
                 
                 
             } else if indexPath.row == 2 && cell.accessoryType == .none {
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = true
                 
                 dateString = ""
@@ -289,9 +409,16 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = false
                 datePicker.isHidden = true
                 
                 dateString = "365"
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm:ss"
+                dateString = dateFormatter.string(from: datePicker.date)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
@@ -299,8 +426,20 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Year", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
                 
-                let weekOfYear = Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))
-                print(weekOfYear)
+                let startIndex = dateString.index(dateString.startIndex, offsetBy: 2)
+                let substringHour = dateString.prefix(upTo: startIndex)
+                let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+                let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
+                
+                let start = dateString.index(dateString.startIndex, offsetBy: 3)
+                let end = dateString.index(dateString.endIndex, offsetBy: -3)
+                let range = start..<end
+                let substringMinute = dateString[range]
+                let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+                let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
+                
+                let weekOfYear = Date().weekOfYear()
+                //print(weekOfYear)
                 
                 var components = DateComponents()
                 components.weekOfYear = weekOfYear
@@ -311,11 +450,11 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                     
                 } else {
                     
-                    components.weekday = Date().dayNumberOfWeek()! - 1 //every year at the day before the reminder is set (to avoid same-day notifications)
+                    components.weekday = Date().dayNumberOfWeekMinusOne() //every year at the day before the reminder is set (to avoid same-day notifications)
                     
                 }
-                components.hour = 18
-                components.minute = 30 //every year at 6:30pm
+                components.hour = hour
+                components.minute = minute
                 
                 //timerRequest(with: 31556952, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
@@ -323,9 +462,14 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
                 print(storedContacts[key].value[8])
+                print(storedContacts[key].value[9])
                 
             } else if indexPath.row == 3 && cell.accessoryType == .none {
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = true
                 
                 dateString = ""
@@ -349,6 +493,10 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = false
                 
                 let dateFormatter = DateFormatter()
@@ -410,9 +558,14 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 print(storedContacts[key].value[8])
+                print(storedContacts[key].value[9])
                 
             } else if indexPath.row == 4 && cell.accessoryType == .none {
                 
+                dayDatePicker.isHidden = true
+                weekDatePicker.isHidden = true
+                monthDatePicker.isHidden = true
+                yearDatePicker.isHidden = true
                 datePicker.isHidden = true
                 
                 dateString = ""
@@ -430,6 +583,195 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
         }
+        
+    }
+    
+    @IBAction func dayPickerMoved(_ sender: Any) {
+        
+        print("day time moved")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        dateString = dateFormatter.string(from: dayDatePicker.date)
+        
+        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        
+        NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
+        
+        let notificationIdentifier = randomString(length: 60)
+        
+        storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Day", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
+        
+        let startIndex = dateString.index(dateString.startIndex, offsetBy: 2)
+        let substringHour = dateString.prefix(upTo: startIndex)
+        let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+        let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        let start = dateString.index(dateString.startIndex, offsetBy: 3)
+        let end = dateString.index(dateString.endIndex, offsetBy: -3)
+        let range = start..<end
+        let substringMinute = dateString[range]
+        let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+        let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        var components = DateComponents()
+        components.hour = hour
+        components.minute = minute //custom time on custom day
+        components.second = 00
+        
+        NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
+        
+        UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
+        print(storedContacts[key].value[9])
+        
+    }
+    
+    @IBAction func weekPickerMoved(_ sender: Any) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        dateString = dateFormatter.string(from: weekDatePicker.date)
+        
+        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        
+        NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
+        
+        let notificationIdentifier = randomString(length: 60)
+        
+        storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Week", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
+        
+        let startIndex = dateString.index(dateString.startIndex, offsetBy: 2)
+        let substringHour = dateString.prefix(upTo: startIndex)
+        let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+        let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        let start = dateString.index(dateString.startIndex, offsetBy: 3)
+        let end = dateString.index(dateString.endIndex, offsetBy: -3)
+        let range = start..<end
+        let substringMinute = dateString[range]
+        let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+        let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        var components = DateComponents()
+        //if it's Sunday, remind on Saturday to avoid same-day notifications
+        if Date().dayNumberOfWeek() == 1 {
+            
+            components.weekday = 7
+            
+        } else {
+            
+            components.weekday = Date().dayNumberOfWeek()! - 1 //every week at the day before the reminder is set (to avoid same-day notifications)
+            
+        }
+        components.hour = hour
+        components.minute = minute //custom time on custom day
+        components.second = 00
+        
+        NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
+        
+        UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
+        print(storedContacts[key].value[9])
+        
+    }
+    
+    @IBAction func monthPickerMoved(_ sender: Any) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        dateString = dateFormatter.string(from: monthDatePicker.date)
+        
+        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        
+        NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
+        
+        let notificationIdentifier = randomString(length: 60)
+        
+        storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Month", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
+        
+        let startIndex = dateString.index(dateString.startIndex, offsetBy: 2)
+        let substringHour = dateString.prefix(upTo: startIndex)
+        let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+        let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        let start = dateString.index(dateString.startIndex, offsetBy: 3)
+        let end = dateString.index(dateString.endIndex, offsetBy: -3)
+        let range = start..<end
+        let substringMinute = dateString[range]
+        let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+        let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        var components = DateComponents()
+        if Date().dayNumberOfWeek() == 1 {
+            
+            components.weekday = 7 //Saturday
+            
+        } else {
+            
+            components.weekday = Date().dayNumberOfWeekMinusOne()
+            
+        }
+        components.weekOfMonth = Date().weekOfMonth()
+        components.hour = hour
+        components.minute = minute //custom time on custom day
+        components.second = 00
+        
+        NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
+        
+        UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
+        print(storedContacts[key].value[9])
+        
+    }
+    
+    @IBAction func yearPickerMoved(_ sender: Any) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        dateString = dateFormatter.string(from: yearDatePicker.date)
+        
+        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        
+        NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
+        
+        let notificationIdentifier = randomString(length: 60)
+        
+        storedContacts.updateValue([primaryPhone, secondaryPhone, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, "Every Year", dateString, notificationIdentifier, contactPicture], forKey: storedContacts[key].key)
+        
+        let startIndex = dateString.index(dateString.startIndex, offsetBy: 2)
+        let substringHour = dateString.prefix(upTo: startIndex)
+        let stringHour = String(substringHour) //convert substring to string so it lets go of substring memory
+        let hour = Int(stringHour) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        let start = dateString.index(dateString.startIndex, offsetBy: 3)
+        let end = dateString.index(dateString.endIndex, offsetBy: -3)
+        let range = start..<end
+        let substringMinute = dateString[range]
+        let stringMinute = String(substringMinute) //convert substring to string so it lets go of substring memory
+        let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
+        
+        let weekOfYear = Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))
+        print(weekOfYear)
+        
+        var components = DateComponents()
+        components.weekOfYear = weekOfYear
+        
+        if Date().dayNumberOfWeek() == 1 {
+            
+            components.weekday = 7
+            
+        } else {
+            
+            components.weekday = Date().dayNumberOfWeek()! - 1 //every year at the day before the reminder is set (to avoid same-day notifications)
+            
+        }
+        components.weekOfMonth = Date().weekOfMonth()
+        components.hour = hour
+        components.minute = minute //custom time on custom day
+        components.second = 00
+        
+        NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
+        
+        UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
+        print(storedContacts[key].value[9])
         
     }
     
@@ -537,6 +879,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         let fullName = storedContacts[key].key
         let firstName = fullName.components(separatedBy: delimiter)
         
+        //originalPerson = (storedContacts.index(forKey: fullName)?.hashValue)!
+        
         descriptionLabel.text? = "Receive a notification to CatchUp with \(firstName[0]):"
         
         //if there is a stored anniversary in the dictionary, set a reminder for their anniversary. Anniversary is stored just as MM-DD, no year
@@ -637,14 +981,50 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         let minDate = Calendar.current.date(byAdding: components, to: Date())
         datePicker.minimumDate = minDate
         
-        if storedContacts[key].value[9] != "" {
+        if storedContacts[key].value[8] == "Custom" {
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss" //Your date format
+            dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss" //Day/time date format
             dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
             let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
             
             datePicker.date = setDate ?? minDate!
+            
+        } else if storedContacts[key].value[8] == "Every Day" {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss" //Only time date format
+            //dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
+            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
+            
+            dayDatePicker.date = setDate ?? minDate!
+            
+        } else if storedContacts[key].value[8] == "Every Week" {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss" //Only time date format
+            //dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
+            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
+            
+            weekDatePicker.date = setDate ?? minDate!
+            
+        } else if storedContacts[key].value[8] == "Every Month" {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss" //Only time date format
+            //dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
+            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
+            
+            monthDatePicker.date = setDate ?? minDate!
+            
+        } else if storedContacts[key].value[8] == "Every Year" {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss" //Only time date format
+            //dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
+            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
+            
+            yearDatePicker.date = setDate ?? minDate!
             
         } else {
             

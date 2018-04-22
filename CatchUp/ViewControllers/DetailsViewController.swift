@@ -12,6 +12,8 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var activeFriend = 0
     
+    //var originalPerson: Int = 0
+    
     //contact picture
     @IBOutlet weak var contactPicture: UIImageView!
     
@@ -27,11 +29,17 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        let pair = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
-        contactPreference.text = "Preference: \(storedContacts[key].value[8])"
+        //let fullName = storedContacts[pair].key
         
-        contactName.text = storedContacts[key].key
+        //originalPerson = (storedContacts.index(forKey: fullName)?.hashValue)!
+        
+        print(storedContacts[pair].value[0])
+        
+        contactPreference.text = "Preference: \(storedContacts[pair].value[8])"
+        
+        contactName.text = storedContacts[pair].key
         
         //set contact picture
         contactPicture.accessibilityIgnoresInvertColors = true
@@ -47,10 +55,10 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //number of rows in the table
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        let pair = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
         //this might return too many
-        let tableRows = storedContacts.values[key].count
+        let tableRows = storedContacts.values[pair].count
         
         return tableRows-3
 
@@ -59,9 +67,9 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //the height of each cell
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //set height to 0 if string is ""
-        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        let pair = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
-        let details = storedContacts.values[key][indexPath.row]
+        let details = storedContacts.values[pair][indexPath.row]
         
         //if the dictionary index is "", set the height to 0
         if details == "" {
@@ -80,13 +88,13 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //What each cell's text shows
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        let pair = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
         let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "detailCell")
         
         cell.selectionStyle = .none
         
-        let details = storedContacts.values[key][indexPath.row]
+        let details = storedContacts.values[pair][indexPath.row]
         
         if indexPath.row == 0 && details != "" {
             
@@ -177,9 +185,9 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //what happens when you select a cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        let pair = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
-        var details = storedContacts.values[key][indexPath.row]
+        var details = storedContacts.values[pair][indexPath.row]
         
         //call primary phone number if there is one
         if indexPath.row == 0 && details != "" {
@@ -260,9 +268,9 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //gets last index of my dictionary, because that's where the contact photo always is
     func getImageString() -> String {
         
-        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        let pair = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
-        let lastValue = storedContacts[key].value.last!
+        let lastValue = storedContacts[pair].value.last!
         
         //print("lastValue = ", lastValue)
         return lastValue
@@ -273,16 +281,16 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let selected = Array(storedContacts.keys)[activeFriend]
         
-        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        let pair = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
         let alert = UIAlertController(title: "Delete \(selected)?", message: "Are you sure you want to delete \(selected) from your CatchUp list?", preferredStyle: .alert)
         
         let confirmDelete = UIAlertAction(title: "Delete", style: .default) { (_) in
             //remove current key from dictionary
             
-            if self.storedContacts[key].value[10] != "" {
+            if self.storedContacts[pair].value[10] != "" {
                 
-                NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [self.storedContacts[key].value[10]])
+                NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [self.storedContacts[pair].value[10]])
                 
             } else {
                 
@@ -320,9 +328,17 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
         
-        let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        //let pair = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
-        contactPreference.text = "Preference: \(storedContacts[key].value[8])"
+        if let entry = storedContacts.first(where: { (key, _) in key.contains(contactName.text!) }) {
+            contactPreference.text = "Preference: \(entry.value[8])"
+        } else {
+            contactPreference.text = "No Reminder Set"
+        }
+        
+        //activeFriend = originalPerson
+        
+        //contactPreference.text = "Preference: \(storedContacts[pair].value[8])"
     }
 
     override func didReceiveMemoryWarning() {

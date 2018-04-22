@@ -16,9 +16,9 @@ enum IAPServiceAlertType{
     
     func message() -> String{
         switch self {
-        case .disabled: return "Purchases are disabled in your device!"
+        case .disabled: return "It looks like in-app purchases are disabled for your device."
         case .restored: return "You've successfully restored your purchase!"
-        case .purchased: return "You've successfully bought this purchase!"
+        case .purchased: return "Your tip was received. Thank you!"
         }
     }
 }
@@ -108,7 +108,7 @@ extension IAPService: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                     break
                     
                 case .failed:
-                    print("failed")
+                    print("canceled or failed")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
                     break
                 case .restored:

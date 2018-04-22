@@ -26,7 +26,7 @@
                                     <constraint firstAttribute="height" constant="559" id="gCD-I6-29h"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="ui6-rX-fXG" detailTextLabel="RDZ-2T-lES" imageView="2N0-Yu-8Ue" style="IBUITableViewCellStyleSubtitle" id="wFz-Md-07F">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="ui6-rX-fXG" detailTextLabel="RDZ-2T-lES" imageView="2N0-Yu-8Ue" style="IBUITableViewCellStyleSubtitle" id="wFz-Md-07F">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wFz-Md-07F" id="FYm-SX-mys">
@@ -814,7 +814,6 @@
                                     <constraint firstItem="hKP-QE-Ffw" firstAttribute="top" secondItem="Zbe-H2-eaC" secondAttribute="bottom" constant="8" id="SbI-Y0-jcs"/>
                                     <constraint firstItem="hKP-QE-Ffw" firstAttribute="top" secondItem="Zbe-H2-eaC" secondAttribute="bottom" constant="8" id="UcN-Nt-563"/>
                                     <constraint firstItem="Ofx-XY-MNg" firstAttribute="top" secondItem="hKP-QE-Ffw" secondAttribute="bottom" constant="8" id="b3q-8u-flU"/>
-                                    <constraint firstItem="Ofx-XY-MNg" firstAttribute="top" secondItem="hKP-QE-Ffw" secondAttribute="bottom" constant="8" id="kUb-KU-78H"/>
                                     <constraint firstItem="Zbe-H2-eaC" firstAttribute="top" secondItem="dps-83-evf" secondAttribute="bottom" constant="8" id="la7-Qq-yRc"/>
                                     <constraint firstItem="Zbe-H2-eaC" firstAttribute="centerX" secondItem="RRT-Z4-KHt" secondAttribute="centerX" id="vbO-ZV-LAm"/>
                                     <constraint firstItem="dps-83-evf" firstAttribute="top" secondItem="RRT-Z4-KHt" secondAttribute="top" constant="8" id="yeO-F2-hz1"/>
@@ -828,7 +827,7 @@
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" id="vNQ-Cu-qag">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="D1w-sb-aeX">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="D1w-sb-aeX">
                                             <rect key="frame" x="16" y="0.0" width="288" height="36"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
@@ -846,7 +845,7 @@
                                 <rect key="frame" x="0.0" y="261" width="320" height="227"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="detailCell" textLabel="9hD-w1-wCg" detailTextLabel="PFT-yq-fbi" style="IBUITableViewCellStyleSubtitle" id="kSH-7G-rYD">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="detailCell" textLabel="9hD-w1-wCg" detailTextLabel="PFT-yq-fbi" style="IBUITableViewCellStyleSubtitle" id="kSH-7G-rYD">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kSH-7G-rYD" id="vsP-Lk-ztv">
@@ -921,7 +920,7 @@
                                 <color key="textColor" red="1" green="0.57457399368286133" blue="0.0019781978335231543" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="p4W-dm-BVP">
+                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="p4W-dm-BVP" userLabel="Custom Date Picker">
                                 <rect key="frame" x="0.0" y="352" width="320" height="216"/>
                                 <date key="date" timeIntervalSinceReferenceDate="540859495.35001194">
                                     <!--2018-02-20 22:44:55 +0000-->
@@ -943,7 +942,7 @@
                                 <rect key="frame" x="0.0" y="153" width="320" height="191"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="reminderCell" textLabel="kGl-kb-H5I" style="IBUITableViewCellStyleDefault" id="4cK-dT-qRY">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="reminderCell" textLabel="kGl-kb-H5I" style="IBUITableViewCellStyleDefault" id="4cK-dT-qRY">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4cK-dT-qRY" id="NqN-ze-No1">
@@ -966,29 +965,89 @@
                                     <outlet property="delegate" destination="kSf-4g-R4H" id="6uo-sD-iNc"/>
                                 </connections>
                             </tableView>
+                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="c0h-hA-fbG" userLabel="Day Date Picker">
+                                <rect key="frame" x="0.0" y="352" width="320" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="546121670.22369802">
+                                    <!--2018-04-22 20:27:50 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="dayPickerMoved:" destination="kSf-4g-R4H" eventType="valueChanged" id="GPm-5t-PBB"/>
+                                </connections>
+                            </datePicker>
+                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="svj-Na-Bbt" userLabel="Week Date Picker">
+                                <rect key="frame" x="0.0" y="352" width="320" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="546122110.76757097">
+                                    <!--2018-04-22 20:35:10 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="weekPickerMoved:" destination="kSf-4g-R4H" eventType="valueChanged" id="efR-Jj-veE"/>
+                                </connections>
+                            </datePicker>
+                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="xYI-hR-2Zg" userLabel="Month Date Picker">
+                                <rect key="frame" x="0.0" y="352" width="320" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="546122184.45436704">
+                                    <!--2018-04-22 20:36:24 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="monthPickerMoved:" destination="kSf-4g-R4H" eventType="valueChanged" id="q96-rp-UyC"/>
+                                </connections>
+                            </datePicker>
+                            <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="5cL-RH-gWR" userLabel="Year Date Picker">
+                                <rect key="frame" x="0.0" y="352" width="320" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="546122236.47770405">
+                                    <!--2018-04-22 20:37:16 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="yearPickerMoved:" destination="kSf-4g-R4H" eventType="valueChanged" id="xX0-cS-E6b"/>
+                                </connections>
+                            </datePicker>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="5cL-RH-gWR" secondAttribute="bottom" id="2SC-WZ-Rwc"/>
+                            <constraint firstAttribute="bottom" secondItem="xYI-hR-2Zg" secondAttribute="bottom" id="4KN-fN-BCo"/>
+                            <constraint firstItem="svj-Na-Bbt" firstAttribute="trailing" secondItem="OvH-k1-TqY" secondAttribute="trailing" id="4Kp-X7-MX4"/>
+                            <constraint firstItem="svj-Na-Bbt" firstAttribute="centerX" secondItem="ZkT-mj-GgT" secondAttribute="centerX" id="6zw-jD-eaG"/>
                             <constraint firstItem="p4W-dm-BVP" firstAttribute="top" secondItem="INE-x0-uyw" secondAttribute="bottom" constant="8" id="75j-IZ-RG1"/>
                             <constraint firstItem="INE-x0-uyw" firstAttribute="leading" secondItem="OvH-k1-TqY" secondAttribute="leading" id="7Kg-Pg-S5M"/>
                             <constraint firstItem="p4W-dm-BVP" firstAttribute="trailing" secondItem="OvH-k1-TqY" secondAttribute="trailing" id="7oc-UX-TQV"/>
+                            <constraint firstItem="xYI-hR-2Zg" firstAttribute="top" secondItem="INE-x0-uyw" secondAttribute="bottom" constant="8" id="BJh-Kx-IT5"/>
+                            <constraint firstItem="5cL-RH-gWR" firstAttribute="centerX" secondItem="ZkT-mj-GgT" secondAttribute="centerX" id="CPH-26-TJ4"/>
+                            <constraint firstItem="c0h-hA-fbG" firstAttribute="centerX" secondItem="ZkT-mj-GgT" secondAttribute="centerX" id="Fuj-MS-DSV"/>
+                            <constraint firstAttribute="bottom" secondItem="svj-Na-Bbt" secondAttribute="bottom" id="GRE-11-IO1"/>
+                            <constraint firstItem="5cL-RH-gWR" firstAttribute="trailing" secondItem="OvH-k1-TqY" secondAttribute="trailing" id="HtF-Q8-j3W"/>
+                            <constraint firstAttribute="bottom" secondItem="c0h-hA-fbG" secondAttribute="bottom" id="I18-A8-Jbw"/>
+                            <constraint firstItem="c0h-hA-fbG" firstAttribute="top" secondItem="INE-x0-uyw" secondAttribute="bottom" constant="8" id="IaV-Bf-hih"/>
+                            <constraint firstItem="svj-Na-Bbt" firstAttribute="top" secondItem="INE-x0-uyw" secondAttribute="bottom" constant="8" id="LjE-Or-oqV"/>
                             <constraint firstItem="Q2t-2A-Lir" firstAttribute="leading" secondItem="OvH-k1-TqY" secondAttribute="leading" constant="16" id="MDs-F2-dbi"/>
+                            <constraint firstItem="svj-Na-Bbt" firstAttribute="leading" secondItem="OvH-k1-TqY" secondAttribute="leading" id="N9h-eE-gc3"/>
                             <constraint firstItem="a9r-JO-1XT" firstAttribute="top" secondItem="Q2t-2A-Lir" secondAttribute="bottom" constant="8" id="NqT-yU-DA4"/>
                             <constraint firstItem="INE-x0-uyw" firstAttribute="top" secondItem="a9r-JO-1XT" secondAttribute="bottom" constant="8" id="PZI-k0-FhW"/>
                             <constraint firstAttribute="bottom" secondItem="p4W-dm-BVP" secondAttribute="bottom" id="UEc-Ao-K42"/>
+                            <constraint firstItem="xYI-hR-2Zg" firstAttribute="centerX" secondItem="ZkT-mj-GgT" secondAttribute="centerX" id="UUK-Qa-fsd"/>
                             <constraint firstItem="INE-x0-uyw" firstAttribute="trailing" secondItem="OvH-k1-TqY" secondAttribute="trailing" id="WGX-C2-U4K"/>
+                            <constraint firstItem="c0h-hA-fbG" firstAttribute="trailing" secondItem="OvH-k1-TqY" secondAttribute="trailing" id="Wym-Og-F0u"/>
                             <constraint firstItem="OvH-k1-TqY" firstAttribute="trailing" secondItem="Q2t-2A-Lir" secondAttribute="trailing" constant="16" id="YYx-lf-mWg"/>
                             <constraint firstItem="OvH-k1-TqY" firstAttribute="trailing" secondItem="a9r-JO-1XT" secondAttribute="trailing" constant="16" id="aVw-Zs-GYP"/>
+                            <constraint firstItem="xYI-hR-2Zg" firstAttribute="trailing" secondItem="OvH-k1-TqY" secondAttribute="trailing" id="cBV-7K-fDQ"/>
                             <constraint firstItem="p4W-dm-BVP" firstAttribute="leading" secondItem="OvH-k1-TqY" secondAttribute="leading" id="eZr-jr-FJ8"/>
+                            <constraint firstItem="5cL-RH-gWR" firstAttribute="leading" secondItem="OvH-k1-TqY" secondAttribute="leading" id="fuY-RZ-aqu"/>
+                            <constraint firstItem="xYI-hR-2Zg" firstAttribute="leading" secondItem="OvH-k1-TqY" secondAttribute="leading" id="jUx-tI-35P"/>
                             <constraint firstItem="a9r-JO-1XT" firstAttribute="leading" secondItem="OvH-k1-TqY" secondAttribute="leading" constant="16" id="lhS-Dl-VqY"/>
                             <constraint firstItem="Q2t-2A-Lir" firstAttribute="top" secondItem="OvH-k1-TqY" secondAttribute="top" id="n8L-FY-pNo"/>
+                            <constraint firstItem="c0h-hA-fbG" firstAttribute="leading" secondItem="OvH-k1-TqY" secondAttribute="leading" id="qkZ-Ji-h6S"/>
+                            <constraint firstItem="5cL-RH-gWR" firstAttribute="top" secondItem="INE-x0-uyw" secondAttribute="bottom" constant="8" id="zWh-Yp-v1f"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OvH-k1-TqY"/>
                     </view>
                     <connections>
                         <outlet property="datePicker" destination="p4W-dm-BVP" id="dgw-XL-8ty"/>
+                        <outlet property="dayDatePicker" destination="c0h-hA-fbG" id="GDr-dr-Fou"/>
                         <outlet property="descriptionLabel" destination="a9r-JO-1XT" id="vL6-GR-wEl"/>
+                        <outlet property="monthDatePicker" destination="xYI-hR-2Zg" id="lZ1-Ej-Rna"/>
                         <outlet property="preferenceTable" destination="INE-x0-uyw" id="AGo-Zr-ENb"/>
+                        <outlet property="weekDatePicker" destination="svj-Na-Bbt" id="laW-eS-boe"/>
+                        <outlet property="yearDatePicker" destination="5cL-RH-gWR" id="xMr-WM-NO8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pG2-eO-PBa" userLabel="First Responder" sceneMemberID="firstResponder"/>

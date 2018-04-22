@@ -48,6 +48,12 @@ extension Date {
     
     func weekOfMonth() -> Int? {
         let calendar = Calendar.current
+        let weekOfMonth = calendar.component(.weekOfMonth, from: Date())
+        return weekOfMonth
+    }
+    
+    func weekOfYear() -> Int? {
+        let calendar = Calendar.current
         let weekOfYear = calendar.component(.weekOfYear, from: Date())
         return weekOfYear
     }
