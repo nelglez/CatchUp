@@ -27,21 +27,15 @@ class AboutViewController: UIViewController {
     }
     
     @IBAction func graciousTipPressed(_ sender: Any) {
-        
         IAPService.shared.purchaseMyProduct(index: 1)
-        
     }
     
     @IBAction func generousTipPressed(_ sender: Any) {
-        
         IAPService.shared.purchaseMyProduct(index: 0)
-        
     }
     
     @IBAction func gratuitousTipPressed(_ sender: Any) {
-        
         IAPService.shared.purchaseMyProduct(index: 2)
-        
     }
     
 }

@@ -41,8 +41,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var weekDatePicker: UIDatePicker!
     @IBOutlet weak var monthDatePicker: UIDatePicker!
     @IBOutlet weak var yearDatePicker: UIDatePicker!
-    @IBOutlet weak var datePicker: UIDatePicker!
-     
+    @IBOutlet weak var customDatePicker: UIDatePicker!
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -81,7 +81,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             weekDatePicker.isHidden = true
             monthDatePicker.isHidden = true
             yearDatePicker.isHidden = true
-            datePicker.isHidden = true
+            customDatePicker.isHidden = true
             
             cell.accessoryType = .checkmark
             
@@ -91,7 +91,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             weekDatePicker.isHidden = false
             monthDatePicker.isHidden = true
             yearDatePicker.isHidden = true
-            datePicker.isHidden = true
+            customDatePicker.isHidden = true
             
             cell.accessoryType = .checkmark
             
@@ -101,7 +101,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             weekDatePicker.isHidden = true
             monthDatePicker.isHidden = false
             yearDatePicker.isHidden = true
-            datePicker.isHidden = true
+            customDatePicker.isHidden = true
             
             cell.accessoryType = .checkmark
             
@@ -111,7 +111,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             weekDatePicker.isHidden = true
             monthDatePicker.isHidden = true
             yearDatePicker.isHidden = false
-            datePicker.isHidden = true
+            customDatePicker.isHidden = true
             
             cell.accessoryType = .checkmark
             
@@ -121,7 +121,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             weekDatePicker.isHidden = true
             monthDatePicker.isHidden = true
             yearDatePicker.isHidden = true
-            datePicker.isHidden = false
+            customDatePicker.isHidden = false
             
             cell.accessoryType = .checkmark
             
@@ -142,19 +142,15 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             //print("current person: \(originalPerson)")
             
             if cell.accessoryType == .checkmark {
-                
                 cell.accessoryType = .none
-                
             } else {
-                
                 uncheckAllCells()
                 cell.accessoryType = .checkmark
-                
             }
             
             //removes any set reminders for this person, then sets the appropriate reminder
             
-                //every day
+            //every day
             if indexPath.row == 0 && cell.accessoryType == .checkmark {
                 print(activeFriend)
                 
@@ -168,12 +164,12 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = "1"
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "HH:mm:ss"
-                dateString = dateFormatter.string(from: datePicker.date)
+                dateString = dateFormatter.string(from: dayDatePicker.date)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
@@ -215,7 +211,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = ""
                 
@@ -242,12 +238,12 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = false
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = "7"
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "HH:mm:ss"
-                dateString = dateFormatter.string(from: datePicker.date)
+                dateString = dateFormatter.string(from: weekDatePicker.date)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
@@ -270,13 +266,9 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 var components = DateComponents()
                 //if it's Sunday, remind on Saturday to avoid same-day notifications
                 if Date().dayNumberOfWeek() == 1 {
-                    
                     components.weekday = 7
-                    
                 } else {
-                    
                     components.weekday = Date().dayNumberOfWeekMinusOne() //every week at the day before the reminder is set (to avoid same-day notifications)
-                    
                 }
                 components.hour = hour
                 components.minute = minute
@@ -295,7 +287,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = ""
                 
@@ -322,12 +314,12 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = false
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = "30"
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "HH:mm:ss"
-                dateString = dateFormatter.string(from: datePicker.date)
+                dateString = dateFormatter.string(from: monthDatePicker.date)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
@@ -350,23 +342,15 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 var components = DateComponents()
                 
                 if Date().dayNumberOfWeek() == 1 {
-                    
                     components.weekday = 7 //Saturday
-                    
                 } else {
-                    
                     components.weekday = Date().dayNumberOfWeekMinusOne()
-                    
                 }
                 
                 if Date().weekOfMonth() == 5 {
-                    
                     components.weekOfMonth = 4
-                    
                 } else {
-                    
                     components.weekOfMonth = Date().weekOfMonth()
-                    
                 }
                 components.hour = hour
                 components.minute = minute
@@ -386,7 +370,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = ""
                 
@@ -413,12 +397,12 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = false
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = "365"
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "HH:mm:ss"
-                dateString = dateFormatter.string(from: datePicker.date)
+                dateString = dateFormatter.string(from: yearDatePicker.date)
                 
                 NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key].value[10]])
                 
@@ -445,13 +429,9 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 components.weekOfYear = weekOfYear
                 
                 if Date().dayNumberOfWeek() == 1 {
-                    
                     components.weekday = 7
-                    
                 } else {
-                    
                     components.weekday = Date().dayNumberOfWeekMinusOne() //every year at the day before the reminder is set (to avoid same-day notifications)
-                    
                 }
                 components.hour = hour
                 components.minute = minute
@@ -461,8 +441,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
-                print(storedContacts[key].value[8])
-                print(storedContacts[key].value[9])
+                //print(storedContacts[key].value[8])
+                //print(storedContacts[key].value[9])
                 
             } else if indexPath.row == 3 && cell.accessoryType == .none {
                 
@@ -470,7 +450,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = ""
                 
@@ -482,7 +462,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
-                print(storedContacts[key].value[8])
+                //print(storedContacts[key].value[8])
                 
                 //custom date
             } else if indexPath.row == 4 && cell.accessoryType == .checkmark {
@@ -497,11 +477,11 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = false
+                customDatePicker.isHidden = false
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
-                dateString = dateFormatter.string(from: datePicker.date)
+                dateString = dateFormatter.string(from: customDatePicker.date)
                 
                 let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
                 
@@ -557,8 +537,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
-                print(storedContacts[key].value[8])
-                print(storedContacts[key].value[9])
+                //print(storedContacts[key].value[8])
+                //print(storedContacts[key].value[9])
                 
             } else if indexPath.row == 4 && cell.accessoryType == .none {
                 
@@ -566,7 +546,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 weekDatePicker.isHidden = true
                 monthDatePicker.isHidden = true
                 yearDatePicker.isHidden = true
-                datePicker.isHidden = true
+                customDatePicker.isHidden = true
                 
                 dateString = ""
                 
@@ -578,7 +558,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
-                print(storedContacts[key].value[8])
+                //print(storedContacts[key].value[8])
                 
             }
             
@@ -588,7 +568,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func dayPickerMoved(_ sender: Any) {
         
-        print("day time moved")
+        //print("day time moved")
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss"
@@ -622,7 +602,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
         
         UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
-        print(storedContacts[key].value[9])
+        //print(storedContacts[key].value[9])
         
     }
     
@@ -655,13 +635,9 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         var components = DateComponents()
         //if it's Sunday, remind on Saturday to avoid same-day notifications
         if Date().dayNumberOfWeek() == 1 {
-            
             components.weekday = 7
-            
         } else {
-            
             components.weekday = Date().dayNumberOfWeek()! - 1 //every week at the day before the reminder is set (to avoid same-day notifications)
-            
         }
         components.hour = hour
         components.minute = minute //custom time on custom day
@@ -670,7 +646,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
         
         UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
-        print(storedContacts[key].value[9])
+        //print(storedContacts[key].value[9])
         
     }
     
@@ -702,13 +678,9 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         
         var components = DateComponents()
         if Date().dayNumberOfWeek() == 1 {
-            
             components.weekday = 7 //Saturday
-            
         } else {
-            
             components.weekday = Date().dayNumberOfWeekMinusOne()
-            
         }
         components.weekOfMonth = Date().weekOfMonth()
         components.hour = hour
@@ -718,7 +690,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
         
         UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
-        print(storedContacts[key].value[9])
+        //print(storedContacts[key].value[9])
         
     }
     
@@ -749,19 +721,15 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         let minute = Int(stringMinute) //convert string to int so we can use it in our date components call for dateRequest()
         
         let weekOfYear = Calendar.current.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))
-        print(weekOfYear)
+        //print(weekOfYear)
         
         var components = DateComponents()
         components.weekOfYear = weekOfYear
         
         if Date().dayNumberOfWeek() == 1 {
-            
             components.weekday = 7
-            
         } else {
-            
             components.weekday = Date().dayNumberOfWeek()! - 1 //every year at the day before the reminder is set (to avoid same-day notifications)
-            
         }
         components.weekOfMonth = Date().weekOfMonth()
         components.hour = hour
@@ -771,15 +739,15 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
         
         UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
-        print(storedContacts[key].value[9])
+        //print(storedContacts[key].value[9])
         
     }
     
-    @IBAction func pickerMoved(_ sender: Any) {
+    @IBAction func customPickerMoved(_ sender: Any) {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
-        dateString = dateFormatter.string(from: datePicker.date)
+        dateString = dateFormatter.string(from: customDatePicker.date)
         
         let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
@@ -835,17 +803,14 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         NotificationService.shared.dateRequest(with: components, contactName: storedContacts[key].key, identifier: storedContacts[key].value[10])
         
         UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
-        print(storedContacts[key].value[9])
+        //print(storedContacts[key].value[9])
         
     }
     
-   
     func uncheckAllCells() {
         
         for cell in preferenceTable.visibleCells {
-            
             cell.accessoryType = .none
-            
         }
         
     }
@@ -979,7 +944,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         
         let components = DateComponents()
         let minDate = Calendar.current.date(byAdding: components, to: Date())
-        datePicker.minimumDate = minDate
+        customDatePicker.minimumDate = minDate
         
         if storedContacts[key].value[8] == "Custom" {
             
@@ -988,7 +953,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
             let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
             
-            datePicker.date = setDate ?? minDate!
+            customDatePicker.date = setDate ?? minDate!
             
         } else if storedContacts[key].value[8] == "Every Day" {
             
@@ -1028,15 +993,15 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
             
         } else {
             
-            datePicker.date = minDate!
+            customDatePicker.date = minDate!
             
         }
         
         //print(storedContacts[index].key)
-        print(storedContacts[key].value[0])
-        print(storedContacts[key].value[8]) //reminderType
-            
-        print(storedContacts[key].value[9]) //reminderPreference
+        //print(storedContacts[key].value[0])
+        //print(storedContacts[key].value[8]) //reminderType
+        
+        //print(storedContacts[key].value[9]) //reminderPreference
         
         //set Save button to size 20 semibold
         //saveButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)], for: [])
@@ -1055,15 +1020,14 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         feedbackGenerator?.prepare()
         
         /*
-        let center = UNUserNotificationCenter.current()
-        center.getPendingNotificationRequests(completionHandler: { requests in
-            for request in requests {
-                print(request)
-            }
-        })
+         let center = UNUserNotificationCenter.current()
+         center.getPendingNotificationRequests(completionHandler: { requests in
+         for request in requests {
+         print(request)
+         }
+         })
          */
         
     }
     
 }
-

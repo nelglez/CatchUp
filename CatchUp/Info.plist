@@ -29,12 +29,16 @@
 		<dict>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>CatchUp List</string>
+            <key>UIApplicationShortcutItemIconType</key>
+            <string>UIApplicationShortcutIconTypeContact</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>Home</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>About</string>
+            <key>UIApplicationShortcutItemIconType</key>
+            <string>UIApplicationShortcutIconTypeFavorite</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>About</string>
 		</dict>

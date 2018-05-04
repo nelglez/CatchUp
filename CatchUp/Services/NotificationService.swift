@@ -56,7 +56,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     
     //TimeInterval is just a double
     //timer push notification
-    //not using this one anymore
+    /*not using this one anymore
     func timerRequest(with interval: TimeInterval, contactName: String, identifier: String) {
         
         let content = UNMutableNotificationContent()
@@ -71,6 +71,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         notification.add(request)
         
     }
+    */
     
     //date push notification
     func dateRequest(with components: DateComponents, contactName: String, identifier: String) {

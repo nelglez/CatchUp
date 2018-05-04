@@ -926,7 +926,7 @@
                                     <!--2018-02-20 22:44:55 +0000-->
                                 </date>
                                 <connections>
-                                    <action selector="pickerMoved:" destination="kSf-4g-R4H" eventType="valueChanged" id="b4C-mC-1G3"/>
+                                    <action selector="customPickerMoved:" destination="kSf-4g-R4H" eventType="valueChanged" id="Vrx-mL-38p"/>
                                 </connections>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receive a notification to CatchUp with name:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9r-JO-1XT">
@@ -1041,7 +1041,7 @@
                         <viewLayoutGuide key="safeArea" id="OvH-k1-TqY"/>
                     </view>
                     <connections>
-                        <outlet property="datePicker" destination="p4W-dm-BVP" id="dgw-XL-8ty"/>
+                        <outlet property="customDatePicker" destination="p4W-dm-BVP" id="tCr-PF-nsh"/>
                         <outlet property="dayDatePicker" destination="c0h-hA-fbG" id="GDr-dr-Fou"/>
                         <outlet property="descriptionLabel" destination="a9r-JO-1XT" id="vL6-GR-wEl"/>
                         <outlet property="monthDatePicker" destination="xYI-hR-2Zg" id="lZ1-Ej-Rna"/>

@@ -13,7 +13,7 @@ import ContactsUI
 var activeFriend = -1
 
 class HomeViewController: UIViewController, CNContactPickerDelegate, UITableViewDelegate, UITableViewDataSource {
-
+    
     //let database = CKContainer.default().privateCloudDatabase
     
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -66,7 +66,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             let alert = UIAlertController(title: "Cannot Add Contacts", message: "🤭 You denied CatchUp access to your Contacts. To change this, go the Settings app, scroll down to CatchUp, and turn on Allow CatchUp to Access Contacts", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
-            print("We need access to your Contacts to remind you to CatchUp with your friends!")
+            //print("We need access to your Contacts to remind you to CatchUp with your friends!")
             
         //not sure what this is
         case .restricted:
@@ -82,13 +82,9 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         //First checks if there are keys in the dictionary
         //If not, initialize an empty [String:[String]] dictionary
         if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
-            
             storedContacts = [:]
-            
         } else {
-                
             storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String : [String]]
-                
         }
         
         //save each contact selected and print their name and phone number
@@ -99,15 +95,10 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             //contact picture
             if contact.imageDataAvailable == true {
                 // there is an image for this contact
-                
                 contactPicture = (contact.thumbnailImageData?.base64EncodedString())!
-                
             } else {
-                
                 let imageData: NSData = UIImagePNGRepresentation(#imageLiteral(resourceName: "DefaultPhoto.png"))! as NSData
-                
                 contactPicture = imageData.base64EncodedString()
-                
             }
             
             //set the contact's name
@@ -115,23 +106,15 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
             //if they have a first and a last name
             if contact.givenName != "" && contact.familyName != "" {
-                
                 fullName = contact.givenName + " " + contact.familyName
-                
                 //if they have a first name, but no last name
             } else if contact.givenName != "" && contact.familyName == "" {
-                
                 fullName = contact.givenName
-                
                 //if they have no first name, but have a last name
             } else if contact.givenName == "" && contact.familyName != "" {
-                
                 fullName = contact.familyName
-                
             } else {
-                
                 fullName = ""
-                
             }
             
             //let fullName:String = contact.givenName + " " + contact.familyName
@@ -148,21 +131,14 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
                 primaryPhoneNumber = firstPhoneNumber.stringValue
                 
                 if userPhoneNumbers.count > 1 {
-                    
                     let secondPhoneNumber = userPhoneNumbers[1].value
                     secondaryPhoneNumber = secondPhoneNumber.stringValue
-                    
                 } else {
-                    
                     secondaryPhoneNumber = ""
-                    
                 }
-                
             } else {
-                
                 primaryPhoneNumber = ""
                 secondaryPhoneNumber = ""
-                
             }
             
             //contact email address array
@@ -172,26 +148,18 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
             //check for email addresses and set values
             if emailAddresses.count > 0 {
-                
                 let firstEmail = emailAddresses[0].value
                 primaryEmail = firstEmail as String
                 
                 if emailAddresses.count > 1 {
-                    
                     let secondEmail = emailAddresses[1].value
                     secondaryEmail = secondEmail as String
-                    
                 } else {
-                    
                     secondaryEmail = ""
-                    
                 }
-                
             } else {
-                
                 primaryEmail = ""
                 secondaryEmail = ""
-                
             }
             
             //contact postal address array
@@ -201,28 +169,20 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
             //check for postal addresses and set values
             if addresses.count > 0 {
-                
                 let firstAddress = addresses[0].value
                 let fullAddress = firstAddress.street + ", " + firstAddress.city + ", " + firstAddress.state + " " + firstAddress.postalCode
                 primaryAddress = fullAddress.replacingOccurrences(of: "\n", with: " ")
                 
                 if addresses.count > 1 {
-                    
                     let secondAddress = addresses[1].value
                     let fullAddress = secondAddress.street + ", " + secondAddress.city + ", " + secondAddress.state + " " + secondAddress.postalCode
                     secondaryAddress = fullAddress.replacingOccurrences(of: "\n", with: " ")
-                    
                 } else {
-                    
                     secondaryAddress = ""
-                    
                 }
-                
             } else {
-                
                 primaryAddress = ""
                 secondaryAddress = ""
-                
             }
             
             //check for birthday and set value
@@ -324,47 +284,34 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             //if the contacts is already stored in the dictionary, do nothing
             //if the contact is not already stored in the dictionary, store it in the dictionary
             if storedContacts[fullName] != nil {
-                
                 print("already stored in dictionary")
-                
             } else {
-                
                 storedContacts[fullName] = [primaryPhoneNumber, secondaryPhoneNumber, primaryEmail, secondaryEmail, primaryAddress, secondaryAddress, birthday, anniversary, reminderType, reminderPreference, notificationIdentifier, contactPicture]
-                
             }
             
             UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
             //saveToiCloud(contactData: selectedContacts)
             //print(selectedContacts)
-            
         }
-        
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         //if the dictionary is empty
         if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
-            
             return 0
-            
             //if there is something in the dictionary
         } else {
             
             let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
-            
             let tableRows = storedContacts.count
-            
             return tableRows
             
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 60
-        
         //return UITableViewAutomaticDimension
     }
     
@@ -375,38 +322,27 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
             
             let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
-            
             cell.textLabel?.text = ""
-            
             cell.accessoryType = .disclosureIndicator
-            
             return cell
-        
-        //If there are keys stored for key 'selectedContacts'
+            
+            //If there are keys stored for key 'selectedContacts'
         } else {
             
             let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
-            
             let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "Cell")
-            
             let cellImageView = cell.imageView!
-            
             //returns name (key) of selected
             let keys = Array(storedContacts.keys)[indexPath.row]
-            
             //returns phone number (value) of selected
             let values = Array(storedContacts.values)[indexPath.row]
-            
             //returns string of contact photo (or defaultContact.jpg) of selected
             let contactPictureString = Array(storedContacts.values)[indexPath.row].last
-            
             //converts contactPhotoString to the actual image
             let contactPicture = contactPictureString!.imageFromBase64EncodedString
             
             cellImageView.accessibilityIgnoresInvertColors = true
-            
             cellImageView.frame = CGRect(x: 50, y: 50, width: 50, height: 50)
-            
             cellImageView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             
             //cell photo
@@ -427,20 +363,18 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             cell.detailTextLabel?.text = values[8]
             
             cell.clipsToBounds = true
-            
             cell.accessoryType = .disclosureIndicator
             
             return cell
             
         }
-        
     }
     
     //what happens when a table cell is swiped
     //long swipe = delete cell
     //short swipe reveals delete and details
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-    
+        
         var storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
         
         //var selectedContacts: [String:[String]] = storedContacts as! [String:[String]]
@@ -449,25 +383,18 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
             //returns name (key) of selected
             let selected = Array(storedContacts.keys)[indexPath.row]
-            
             let key = storedContacts.index(forKey: selected)
-            
             let alert = UIAlertController(title: "Delete \(selected)?", message: "Are you sure you want to delete \(selected) from your CatchUp list?", preferredStyle: .alert)
             
             let confirmDelete = UIAlertAction(title: "Delete", style: .default) { (_) in
                 //remove current key from dictionary
                 if storedContacts[key!].value[10] != "" {
-                    
                     NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key!].value[10]])
-                    
                 } else {
-                    
                     print ("notification request not removed")
-                    
                 }
                 
                 storedContacts.removeValue(forKey: selected)
-                
                 UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
                 
                 self.friendsTable.reloadData()
@@ -480,11 +407,10 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             self.present(alert, animated: true, completion: nil)
             
         }
-    
+        
         let details = UITableViewRowAction(style: .normal, title: "Details") { (action, indexPath) in
             
             activeFriend = indexPath.row
-            
             self.performSegue(withIdentifier: "toDetailsViewController", sender: nil)
             
         }
@@ -518,7 +444,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     
     //keeps track of which row is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         activeFriend = indexPath.row
         
         let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell?
@@ -542,10 +468,10 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         super.viewDidLoad()
         
         /* DELETES ALL USERDEFAULTS
-            if let bundle = Bundle.main.bundleIdentifier {
-                UserDefaults.standard.removePersistentDomain(forName: bundle)
-            }
-        */
+         if let bundle = Bundle.main.bundleIdentifier {
+         UserDefaults.standard.removePersistentDomain(forName: bundle)
+         }
+         */
         
         //self.navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "Hello!.jpg"), for: .default)
         
@@ -557,13 +483,9 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     override func viewDidAppear(_ animated: Bool) {
         
         if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
-            
             storedContacts = [:]
-            
         } else {
-            
             storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String : [String]]
-            
         }
         
         activeFriend = -1
@@ -581,55 +503,55 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         //print("Contacts Dictionary: \(storedContacts ?? "Nothing Here Yet")")
         
         friendsTable.reloadData()
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     /*
-    func saveToiCloud(contactData: [String:[String]]) {
-        
-        /* this enum in CKRecord+Enum.swift extension
-        enum contactKey: String {
-            case fullName
-            case primaryPhoneNumber
-            case secondaryPhoneNumber
-            case primaryEmail
-            case secondaryEmail
-            case primaryAddress
-            case secondaryAddress
-            case birthday
-            case anniversary
-            case contactPicture
-        }
-         */
-        
-        let savedContact = CKRecord(recordType: "savedContact")
-        
-        savedContact[.fullName] = Array(contactData.keys)[0]
-        
-        print(savedContact[.fullName])
-        
-        //savedContact.setValue(contactName, forKey: "data")
-        
-        /*
-        database.save(savedContact) { (record, error) in
-            
-            print(error ?? "No errors here, move along")
-            
-            guard record != nil else { return }
-            
-            print("Saved record with contact \(record?.object(forKey: "data") ?? "" as CKRecordValue)")
-            
-        }
-         */
-        
-        
-    }
-    */
+     func saveToiCloud(contactData: [String:[String]]) {
+     
+     /* this enum in CKRecord+Enum.swift extension
+     enum contactKey: String {
+     case fullName
+     case primaryPhoneNumber
+     case secondaryPhoneNumber
+     case primaryEmail
+     case secondaryEmail
+     case primaryAddress
+     case secondaryAddress
+     case birthday
+     case anniversary
+     case contactPicture
+     }
+     */
+     
+     let savedContact = CKRecord(recordType: "savedContact")
+     
+     savedContact[.fullName] = Array(contactData.keys)[0]
+     
+     print(savedContact[.fullName])
+     
+     //savedContact.setValue(contactName, forKey: "data")
+     
+     /*
+     database.save(savedContact) { (record, error) in
+     
+     print(error ?? "No errors here, move along")
+     
+     guard record != nil else { return }
+     
+     print("Saved record with contact \(record?.object(forKey: "data") ?? "" as CKRecordValue)")
+     
+     }
+     */
+     
+     
+     }
+     */
     
 }
 
