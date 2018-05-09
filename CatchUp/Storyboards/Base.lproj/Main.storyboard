@@ -300,6 +300,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uWb-KF-0gH"/>
                     </view>
+                    <connections>
+                        <outlet property="iconImageView" destination="fb9-gT-drs" id="Nq6-VY-BaS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jYm-ce-UKF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1067,7 +1070,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="82V-jZ-HK0"/>
         <segue reference="hTY-Y6-fiq"/>
-        <segue reference="lgK-dj-Sfg"/>
+        <segue reference="Dqe-rb-n1o"/>
         <segue reference="IZa-v6-SEU"/>
         <segue reference="b4k-nY-Vv9"/>
         <segue reference="J7v-Ug-xyW"/>

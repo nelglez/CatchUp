@@ -10,8 +10,13 @@ import Foundation
 import UIKit
 
 class AboutViewController: UIViewController {
-
+    
+    @IBOutlet weak var iconImageView: UIImageView!
+    
     override func viewDidLoad() {
+        
+        iconImageView.accessibilityIgnoresInvertColors = true
+        
         IAPService.shared.fetchAvailableProducts()
         IAPService.shared.purchaseStatusBlock = {[weak self] (type) in
             guard let strongSelf = self else{ return }
