@@ -17,6 +17,7 @@
 		F443C31F20703C06000E9FA8 /* Walkthrough4.png in Resources */ = {isa = PBXBuildFile; fileRef = F443C31D20703C06000E9FA8 /* Walkthrough4.png */; };
 		F44F1978201C1E16008CE4DB /* CKRecord+Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */; };
 		F4573E34207867E500A92667 /* IAPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4573E33207867E500A92667 /* IAPService.swift */; };
+		F462287320A7D40600C10890 /* Walkthrough3.png in Resources */ = {isa = PBXBuildFile; fileRef = F462287220A7D40500C10890 /* Walkthrough3.png */; };
 		F47101CF1FB5614A009D34EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101CE1FB5614A009D34EF /* AppDelegate.swift */; };
 		F47101D11FB5614A009D34EF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47101D01FB5614A009D34EF /* HomeViewController.swift */; };
 		F47101D41FB5614A009D34EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47101D21FB5614A009D34EF /* Main.storyboard */; };
@@ -27,7 +28,6 @@
 		F4B458FD201AD1B000635A77 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B458FC201AD1B000635A77 /* UIColor+Hex.swift */; };
 		F4B63814205472840084DBBE /* UIAlertController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B63813205472840084DBBE /* UIAlertController+Actions.swift */; };
 		F4B63816205484E90084DBBE /* Rounded Bell 1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B63815205484E90084DBBE /* Rounded Bell 1024x1024.png */; };
-		F4BE9304206F03100033FE80 /* Walkthrough3.png in Resources */ = {isa = PBXBuildFile; fileRef = F4BE92FD206F030F0033FE80 /* Walkthrough3.png */; };
 		F4BE9306206F03100033FE80 /* Walkthrough2.png in Resources */ = {isa = PBXBuildFile; fileRef = F4BE92FF206F030F0033FE80 /* Walkthrough2.png */; };
 		F4D830BC2095318A008F30B7 /* Walkthrough5.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D830BB2095318A008F30B7 /* Walkthrough5.png */; };
 		F4E2A0AF204CDAB300E6CD51 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */; };
@@ -46,6 +46,7 @@
 		F44F1974201C0546008CE4DB /* CatchUp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatchUp.entitlements; sourceTree = "<group>"; };
 		F44F1977201C1E16008CE4DB /* CKRecord+Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Enum.swift"; sourceTree = "<group>"; };
 		F4573E33207867E500A92667 /* IAPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPService.swift; sourceTree = "<group>"; };
+		F462287220A7D40500C10890 /* Walkthrough3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough3.png; sourceTree = "<group>"; };
 		F47101CB1FB5614A009D34EF /* CatchUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatchUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47101CE1FB5614A009D34EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F47101D01FB5614A009D34EF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -58,7 +59,6 @@
 		F4B458FC201AD1B000635A77 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		F4B63813205472840084DBBE /* UIAlertController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Actions.swift"; sourceTree = "<group>"; };
 		F4B63815205484E90084DBBE /* Rounded Bell 1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rounded Bell 1024x1024.png"; sourceTree = "<group>"; };
-		F4BE92FD206F030F0033FE80 /* Walkthrough3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough3.png; sourceTree = "<group>"; };
 		F4BE92FF206F030F0033FE80 /* Walkthrough2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough2.png; sourceTree = "<group>"; };
 		F4D830BB2095318A008F30B7 /* Walkthrough5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough5.png; sourceTree = "<group>"; };
 		F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 			children = (
 				F443C312206FDF29000E9FA8 /* Walkthrough1.jpeg */,
 				F4BE92FF206F030F0033FE80 /* Walkthrough2.png */,
-				F4BE92FD206F030F0033FE80 /* Walkthrough3.png */,
+				F462287220A7D40500C10890 /* Walkthrough3.png */,
 				F443C31D20703C06000E9FA8 /* Walkthrough4.png */,
 				F4D830BB2095318A008F30B7 /* Walkthrough5.png */,
 				F40CCE0F200C4FF50054CC5F /* DefaultPhoto.png */,
@@ -246,7 +246,7 @@
 			files = (
 				F40CCE10200C4FF60054CC5F /* DefaultPhoto.png in Resources */,
 				F443C313206FDF2A000E9FA8 /* Walkthrough1.jpeg in Resources */,
-				F4BE9304206F03100033FE80 /* Walkthrough3.png in Resources */,
+				F462287320A7D40600C10890 /* Walkthrough3.png in Resources */,
 				F443C31F20703C06000E9FA8 /* Walkthrough4.png in Resources */,
 				F4B63816205484E90084DBBE /* Rounded Bell 1024x1024.png in Resources */,
 				F4D830BC2095318A008F30B7 /* Walkthrough5.png in Resources */,

@@ -29,18 +29,21 @@ class AboutViewController: UIViewController {
                 strongSelf.present(alertView, animated: true, completion: nil)
             }
         }
-    }
+    } //end viewDidLoad
     
+    //$0.99 tip from Tip Jar
     @IBAction func graciousTipPressed(_ sender: Any) {
         IAPService.shared.purchaseMyProduct(index: 1)
-    }
+    } //end graciousTipPressed
     
+    //$1.99 tip from Tip Jar
     @IBAction func generousTipPressed(_ sender: Any) {
         IAPService.shared.purchaseMyProduct(index: 0)
-    }
+    } //end generousTipPressed
     
+    //$4.99 tip from Tip Jar
     @IBAction func gratuitousTipPressed(_ sender: Any) {
         IAPService.shared.purchaseMyProduct(index: 2)
-    }
+    } //end gratuitousTipPressed
     
 }

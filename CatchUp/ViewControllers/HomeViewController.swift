@@ -26,6 +26,48 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     
     var activeRow = 0
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        /* DELETES ALL USERDEFAULTS
+         if let bundle = Bundle.main.bundleIdentifier {
+         UserDefaults.standard.removePersistentDomain(forName: bundle)
+         }
+         */
+        
+        //self.navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "Hello!.jpg"), for: .default)
+        
+        //set Add Contacts button to size 20 semibold
+        addButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)], for: [])
+        
+    } //end viewDidLoad
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
+            storedContacts = [:]
+        } else {
+            storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String : [String]]
+        }
+        
+        activeFriend = -1
+        
+        //remove app badge icon on app load
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        //hides the nav bar border
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.backgroundColor = UIColor(rgb: 0xFFFFFF)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        //let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
+        
+        //print("Contacts Dictionary: \(storedContacts ?? "Nothing Here Yet")")
+        
+        friendsTable.reloadData()
+        
+    } //end viewDidAppear
+    
     //Executes when the + button is tapped
     //Requests access if not given yet, and displays the user's Contacts upon approval
     @IBAction func addFriends(_ sender: Any) {
@@ -74,7 +116,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
         }
         
-    }
+    } //end addFriends
     
     //Executes when a contact is selected
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
@@ -293,7 +335,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             //saveToiCloud(contactData: selectedContacts)
             //print(selectedContacts)
         }
-    }
+    } //end contactPicker did selection contacts
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -308,12 +350,12 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             return tableRows
             
         }
-    }
+    } //end numberOfRowsInSection
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
         //return UITableViewAutomaticDimension
-    }
+    } //end heightForRowAt
     
     //What each cell text shows
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -368,7 +410,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             return cell
             
         }
-    }
+    } //end cellForRowAt
     
     //what happens when a table cell is swiped
     //long swipe = delete cell
@@ -419,7 +461,20 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         details.backgroundColor = UIColor(rgb: 0xC7C7CC)
         
         return [delete, details]
-    }
+    } //end editActionsForRowAt
+    
+    //keeps track of which row is tapped
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        activeFriend = indexPath.row
+        
+        let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell?
+        
+        print(currentCell?.textLabel!.text! ?? "None")
+        
+        performSegue(withIdentifier: "toDetailsViewController", sender: nil)
+        
+    } //end didSelectRowAt
     
     
     func isKeyPresentInUserDefaults(key: String) -> Bool {
@@ -440,20 +495,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
          }
          */
         
-    }
-    
-    //keeps track of which row is tapped
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        activeFriend = indexPath.row
-        
-        let currentCell = tableView.cellForRow(at: indexPath) as UITableViewCell?
-        
-        print(currentCell?.textLabel!.text! ?? "None")
-        
-        performSegue(withIdentifier: "toDetailsViewController", sender: nil)
-        
-    }
+    } //end isKeyPresentInUserDefaults
     
     //what happens when the segue is performed
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -462,54 +504,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
             detailsViewController.activeFriend = activeFriend //sets activeRow in DetailsViewController to the row just tapped in TableViewController!
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        /* DELETES ALL USERDEFAULTS
-         if let bundle = Bundle.main.bundleIdentifier {
-         UserDefaults.standard.removePersistentDomain(forName: bundle)
-         }
-         */
-        
-        //self.navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "Hello!.jpg"), for: .default)
-        
-        //set Add Contacts button to size 20 semibold
-        addButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)], for: [])
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
-            storedContacts = [:]
-        } else {
-            storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String : [String]]
-        }
-        
-        activeFriend = -1
-        
-        //remove app badge icon on app load
-        UIApplication.shared.applicationIconBadgeNumber = 0
-        
-        //hides the nav bar border
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.backgroundColor = UIColor(rgb: 0xFFFFFF)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        
-        //let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
-        
-        //print("Contacts Dictionary: \(storedContacts ?? "Nothing Here Yet")")
-        
-        friendsTable.reloadData()
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    } //end prepare(for segue:)
     
     /*
      func saveToiCloud(contactData: [String:[String]]) {

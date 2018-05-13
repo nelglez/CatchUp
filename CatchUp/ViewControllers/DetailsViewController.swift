@@ -50,7 +50,25 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         contactPicture.layer.cornerRadius = contactPicture.frame.height/2
         contactPicture.clipsToBounds = true
         
-    }
+    } //end viewDidLoad
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.backgroundColor = UIColor(rgb: 0xFAFAFF)
+        
+        storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
+        
+        //let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
+        
+        if let entry = storedContacts.first(where: { (key, _) in key.contains(contactName.text!) }) {
+            contactPreference.text = "Preference: \(entry.value[8])"
+        } else {
+            contactPreference.text = "No Reminder Set"
+        }
+        
+        //activeFriend = originalPerson
+        
+        //contactPreference.text = "Preference: \(storedContacts[key].value[8])"
+    } //end viewDidAppear
     
     //number of rows in the table
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,7 +80,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         return tableRows-3
         
-    }
+    } //end numberOfRowsInSection
     
     //the height of each cell
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -79,7 +97,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             return UITableViewAutomaticDimension
         }
         
-    }
+    } //end heightForRowAt
     
     //What each cell's text shows
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -164,15 +182,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         return cell
         
-    }
-    
-    func callNumber(number: URL) {
-        UIApplication.shared.open(number)
-    }
-    
-    func textNumber(number: String) {
-        UIApplication.shared.open(URL(string: "sms:\(number)")!, options: [:], completionHandler: nil)
-    }
+    } //end cellForRowAt
     
     //what happens when you select a cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -251,7 +261,17 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
             }
         }
-    }
+    } //end didSelectRowAt
+    
+    //end table view functions//
+    
+    func callNumber(number: URL) {
+        UIApplication.shared.open(number)
+    } //end callNumber
+    
+    func textNumber(number: String) {
+        UIApplication.shared.open(URL(string: "sms:\(number)")!, options: [:], completionHandler: nil)
+    } //end textNumber
     
     //gets last index of my dictionary, because that's where the contact photo always is
     func getImageString() -> String {
@@ -263,7 +283,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         //print("lastValue = ", lastValue)
         return lastValue
         
-    }
+    } //end getImageString
     
     @IBAction func deletePressed(_ sender: Any) {
         
@@ -296,7 +316,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         alert.addAction(confirmDelete)
         present(alert, animated: true, completion: nil)
         
-    }
+    } //end deletePressed
     
     //what happens when the segue is performed
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -305,30 +325,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             reminderViewController.activeFriend = activeFriend
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.backgroundColor = UIColor(rgb: 0xFAFAFF)
-        
-        storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
-        
-        //let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
-        
-        if let entry = storedContacts.first(where: { (key, _) in key.contains(contactName.text!) }) {
-            contactPreference.text = "Preference: \(entry.value[8])"
-        } else {
-            contactPreference.text = "No Reminder Set"
-        }
-        
-        //activeFriend = originalPerson
-        
-        //contactPreference.text = "Preference: \(storedContacts[key].value[8])"
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    } //end prepare(for segue:)
     
     /*valuable code so not deleting it
      //regex check for a valid phone number

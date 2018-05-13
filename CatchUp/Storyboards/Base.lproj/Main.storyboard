@@ -356,7 +356,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="161" id="4kS-2C-57N"/>
                                 </constraints>
-                                <string key="text">Thank you for using CatchUp! CatchUp is an app to remind you to keep in touch with the people that matter most. The following screens will walk you through the basics.</string>
+                                <string key="text">Thank you for using CatchUp! CatchUp is built to help you to keep in touch with the people that matter most. The following screens will walk you through the basics.</string>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1063,14 +1063,14 @@
         <image name="Rounded Bell 1024x1024.png" width="1024" height="1024"/>
         <image name="Walkthrough1.jpeg" width="750" height="1296"/>
         <image name="Walkthrough2.png" width="577" height="1001"/>
-        <image name="Walkthrough3.png" width="750" height="1290"/>
+        <image name="Walkthrough3.png" width="750" height="1296"/>
         <image name="Walkthrough4.png" width="750" height="1295"/>
         <image name="Walkthrough5.png" width="750" height="1299"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="82V-jZ-HK0"/>
         <segue reference="hTY-Y6-fiq"/>
-        <segue reference="Dqe-rb-n1o"/>
+        <segue reference="lgK-dj-Sfg"/>
         <segue reference="IZa-v6-SEU"/>
         <segue reference="b4k-nY-Vv9"/>
         <segue reference="J7v-Ug-xyW"/>
