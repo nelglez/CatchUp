@@ -1,0 +1,129 @@
+
+/* Class = "UILabel"; text = "CatchUp"; ObjectID = "20W-Sp-uk0"; */
+"20W-Sp-uk0.text" = "CatchUp";
+
+/* Class = "UILabel"; text = "Tip Jar"; ObjectID = "25N-Jw-KDX"; */
+"25N-Jw-KDX.text" = "Tipskrukke";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "2Ok-CS-cCm"; */
+"2Ok-CS-cCm.normalTitle" = "Tilbake";
+
+/* Class = "UIBarButtonItem"; title = "CatchUp"; ObjectID = "5x2-Jm-irx"; */
+"5x2-Jm-irx.title" = "CatchUp";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "62V-1z-BZZ"; */
+"62V-1z-BZZ.normalTitle" = "Fortsette";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "9hD-w1-wCg"; */
+"9hD-w1-wCg.text" = "Tittel";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "Cke-FM-vQa"; */
+"Cke-FM-vQa.normalTitle" = "Tilbake";
+
+/* Class = "UIButton"; normalTitle = "Delete"; ObjectID = "D1w-sb-aeX"; */
+"D1w-sb-aeX.normalTitle" = "Slett";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "E91-2Y-ela"; */
+"E91-2Y-ela.normalTitle" = "Tilbake";
+
+/* Class = "UILabel"; text = "_______________________________________________________________________________________________________________________________________________________________________________________________________"; ObjectID = "EkA-JU-lOi"; */
+"EkA-JU-lOi.text" = "_______________________________________________________________________________________________________________________________________________________________________________________________________";
+
+/* Class = "UILabel"; text = "___________________________________________________________________________________________________________________________________________________________________________________________________________"; ObjectID = "GOg-zN-UMw"; */
+"GOg-zN-UMw.text" = "___________________________________________________________________________________________________________________________________________________________________________________________________________";
+
+/* Class = "UILabel"; text = "CatchUp has no ads, and I make no money from it by default. If you find it useful, please consider supporting development by leaving a tip."; ObjectID = "HCf-dl-JXj"; */
+"HCf-dl-JXj.text" = "CatchUp har ingen annonser, og jeg tjener ikke penger som standard. Hvis du synes det er nyttig, kan du vurdere å støtte utviklingen ved å gi et tips.";
+
+/* Class = "UIButton"; normalTitle = "View Walkthrough Screens"; ObjectID = "Jq6-pW-10b"; */
+"Jq6-pW-10b.normalTitle" = "Se opplæringen";
+
+/* Class = "UILabel"; text = "Thank you for using CatchUp! CatchUp is built to help you to keep in touch with the people that matter most. The following screens will walk you through the basics."; ObjectID = "NcZ-uv-1oD"; */
+"NcZ-uv-1oD.text" = "Takk for at du bruker CatchUp! CatchUp er bygget for å hjelpe deg med å holde kontakten med folkene som er mest viktige. Følgende skjermer vil gå deg gjennom det grunnleggende.";
+
+/* Class = "UIButton"; normalTitle = "Change Notification Preference"; ObjectID = "Ofx-XY-MNg"; */
+"Ofx-XY-MNg.normalTitle" = "Endre varselinnstilling";
+
+/* Class = "UIBarButtonItem"; title = "About"; ObjectID = "Os4-pG-90w"; */
+"Os4-pG-90w.title" = "Omkring";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "PFT-yq-fbi"; */
+"PFT-yq-fbi.text" = "Detalj";
+
+/* Class = "UILabel"; text = "Preference"; ObjectID = "Q2t-2A-Lir"; */
+"Q2t-2A-Lir.text" = "Preferanse";
+
+/* Class = "UILabel"; text = "Contact Information"; ObjectID = "RDZ-2T-lES"; */
+"RDZ-2T-lES.text" = "Kontaktinformasjon";
+
+/* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "RRX-ot-Cq2"; */
+"RRX-ot-Cq2.normalTitle" = "Skulke";
+
+/* Class = "UILabel"; text = "2/5"; ObjectID = "Ts4-F0-0ia"; */
+"Ts4-F0-0ia.text" = "2/5";
+
+/* Class = "UIButton"; normalTitle = "Let's Go!"; ObjectID = "VBQ-4c-KHn"; */
+"VBQ-4c-KHn.normalTitle" = "Gå!";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "WXH-Zs-x8i"; */
+"WXH-Zs-x8i.normalTitle" = "Fortsette";
+
+/* Class = "UILabel"; text = "1/5"; ObjectID = "Wn6-aG-Ldq"; */
+"Wn6-aG-Ldq.text" = "1/5";
+
+/* Class = "UILabel"; text = "5/5"; ObjectID = "XlI-en-Cgy"; */
+"XlI-en-Cgy.text" = "5/5";
+
+/* Class = "UINavigationItem"; title = "CatchUp"; ObjectID = "ZGc-ox-xaO"; */
+"ZGc-ox-xaO.title" = "CatchUp";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "Zbe-H2-eaC"; */
+"Zbe-H2-eaC.text" = "Navn";
+
+/* Class = "UILabel"; text = "Receive a notification to CatchUp with name:"; ObjectID = "a9r-JO-1XT"; */
+"a9r-JO-1XT.text" = "Motta et varsel til CatchUp med navn:";
+
+/* Class = "UILabel"; text = "4/5"; ObjectID = "aU5-fN-Tz9"; */
+"aU5-fN-Tz9.text" = "4/5";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "bc0-MP-B9t"; */
+"bc0-MP-B9t.normalTitle" = "Fortsette";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "cEf-Mc-ZpR"; */
+"cEf-Mc-ZpR.normalTitle" = "Ferdig";
+
+/* Class = "UILabel"; text = "Preference:"; ObjectID = "hKP-QE-Ffw"; */
+"hKP-QE-Ffw.text" = "Preferanse:";
+
+/* Class = "UILabel"; text = "3/5"; ObjectID = "kFH-qy-qOI"; */
+"kFH-qy-qOI.text" = "3/5";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "kGl-kb-H5I"; */
+"kGl-kb-H5I.text" = "Tittel";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "ktd-h7-Kov"; */
+"ktd-h7-Kov.normalTitle" = "Fortsette";
+
+/* Class = "UILabel"; text = "Made with ❤️ by Ryan Token, a part-time independent iOS developer"; ObjectID = "mjw-39-DFH"; */
+"mjw-39-DFH.text" = "Laget med ❤️ av Ryan Token, en deltids uavhengig iOS-utvikler";
+
+/* Class = "UIBarButtonItem"; title = "Add Contacts"; ObjectID = "nKb-0M-cvo"; */
+"nKb-0M-cvo.title" = "Legg til kontakter";
+
+/* Class = "UILabel"; text = "CatchUp"; ObjectID = "oQv-Zw-jEc"; */
+"oQv-Zw-jEc.text" = "CatchUp";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "oWg-52-BL3"; */
+"oWg-52-BL3.normalTitle" = "Tilbake";
+
+/* Class = "UILabel"; text = "To update a contact's information, delete the contact and re-add them"; ObjectID = "sNb-bp-fCV"; */
+"sNb-bp-fCV.text" = "Hvis du vil oppdatere en kontaktinformasjon, sletter du kontakten og legger til dem igjen";
+
+/* Class = "UILabel"; text = "Full Name"; ObjectID = "ui6-rX-fXG"; */
+"ui6-rX-fXG.text" = "Fullt navn";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "wXK-Bz-iec"; */
+"wXK-Bz-iec.normalTitle" = "Tilbake";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "x2N-en-6qd"; */
+"x2N-en-6qd.normalTitle" = "Tilbake";

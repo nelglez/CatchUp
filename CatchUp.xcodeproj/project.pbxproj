@@ -63,6 +63,8 @@
 		F4D830BB2095318A008F30B7 /* Walkthrough5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough5.png; sourceTree = "<group>"; };
 		F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		F4E3CE7020B8B41800436759 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		F4E3CE7120B8B41800436759 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +291,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F47101D31FB5614A009D34EF /* Base */,
+				F4E3CE7120B8B41800436759 /* nb */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F47101D81FB5614A009D34EF /* Base */,
+				F4E3CE7020B8B41800436759 /* nb */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -308,6 +312,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -367,6 +372,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
