@@ -11,7 +11,7 @@ import UIKit
 
 extension UIImage {
     var base64EncodedString: String? {
-        if let data = UIImagePNGRepresentation(self) {
+        if let data = self.pngData() {
             return data.base64EncodedString()
         }
         return nil

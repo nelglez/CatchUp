@@ -40,7 +40,7 @@ class IAPService: NSObject {
     // MARK: - MAKE PURCHASE OF A PRODUCT
     func canMakePurchases() -> Bool {  return SKPaymentQueue.canMakePayments()  }
     
-    func purchaseMyProduct(index: Int){
+    func leaveATip(index: Int){
         if iapProducts.count == 0 { return }
         
         if self.canMakePurchases() {

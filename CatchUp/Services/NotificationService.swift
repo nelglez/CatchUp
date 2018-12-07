@@ -106,7 +106,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
             content.body = "Keep in touch"
             
         }
-        content.sound = .default()
+        content.sound = .default
         content.badge = 1
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
@@ -122,7 +122,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         let content = UNMutableNotificationContent()
         content.title = "😍 Anniversary detected!"
         content.body = "Your anniversary with \(contactName) is coming up soon. The date is stored in CatchUp. Don't worry, there's still time to plan something amazing."
-        content.sound = .default()
+        content.sound = .default
         content.badge = 1
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
@@ -138,7 +138,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         let content = UNMutableNotificationContent()
         content.title = "🎂 It's almost \(contactName)'s birthday!"
         content.body = "Their birthday is stored in CatchUp. Now you can be the first friend to wish them a happy one!"
-        content.sound = .default()
+        content.sound = .default
         content.badge = 1
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)

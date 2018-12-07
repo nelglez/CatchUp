@@ -11,9 +11,14 @@ import UIKit
 
 class AboutViewController: UIViewController {
     
+    var feedbackGenerator : UIImpactFeedbackGenerator? = nil
+    
     @IBOutlet weak var iconImageView: UIImageView!
     
     override func viewDidLoad() {
+        
+        // Instantiate a new generator.
+        feedbackGenerator = UIImpactFeedbackGenerator()
         
         iconImageView.accessibilityIgnoresInvertColors = true
         
@@ -33,17 +38,24 @@ class AboutViewController: UIViewController {
     
     //$0.99 tip from Tip Jar
     @IBAction func graciousTipPressed(_ sender: Any) {
-        IAPService.shared.purchaseMyProduct(index: 1)
+        // Prepare the generator when the gesture begins.
+        feedbackGenerator?.prepare()
+        feedbackGenerator?.impactOccurred() //Trigger selection feedback.
+        IAPService.shared.leaveATip(index: 1)
     } //end graciousTipPressed
     
     //$1.99 tip from Tip Jar
     @IBAction func generousTipPressed(_ sender: Any) {
-        IAPService.shared.purchaseMyProduct(index: 0)
+        feedbackGenerator?.prepare()
+        feedbackGenerator?.impactOccurred() //Trigger selection feedback.
+        IAPService.shared.leaveATip(index: 0)
     } //end generousTipPressed
     
     //$4.99 tip from Tip Jar
     @IBAction func gratuitousTipPressed(_ sender: Any) {
-        IAPService.shared.purchaseMyProduct(index: 2)
+        feedbackGenerator?.prepare()
+        feedbackGenerator?.impactOccurred() //Trigger selection feedback.
+        IAPService.shared.leaveATip(index: 2)
     } //end gratuitousTipPressed
     
 }

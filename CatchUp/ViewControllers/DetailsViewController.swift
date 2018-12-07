@@ -94,7 +94,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
             return 0
             //if there is something at that index, set the height to default
         } else {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
         
     } //end heightForRowAt
@@ -104,7 +104,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
-        let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "detailCell")
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "detailCell")
         
         cell.selectionStyle = .none
         
@@ -211,7 +211,10 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 alert.messageActions(actions: [UIAlertAction(title: "Text", style: .default, handler: {(alert: UIAlertAction!) in self.textNumber(number: textNumber)}),
-                                               UIAlertAction(title: "Call", style: .default, handler: {(alert: UIAlertAction!) in self.callNumber(number: callNumber)}), UIAlertAction(title: "Cancel", style: .cancel, handler: nil)], preferred: "Text")
+                                               UIAlertAction(title: "Call", style: .default, handler: {(alert: UIAlertAction!) in self.callNumber(number: callNumber)}),
+                                               UIAlertAction(title: "FaceTime", style: .default, handler: {(alert: UIAlertAction!) in facetime(phoneNumber: textNumber)}),
+                                               UIAlertAction(title: "Cancel", style: .cancel, handler: nil)],
+                                     preferred: "Text")
                 
                 self.present(alert, animated: true)
                 
@@ -237,7 +240,10 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 alert.messageActions(actions: [UIAlertAction(title: "Text", style: .default, handler: {(alert: UIAlertAction!) in self.textNumber(number: textNumber)}),
-                                               UIAlertAction(title: "Call", style: .default, handler: {(alert: UIAlertAction!) in self.callNumber(number: callNumber)}), UIAlertAction(title: "Cancel", style: .cancel, handler: nil)], preferred: "Text")
+                                               UIAlertAction(title: "Call", style: .default, handler: {(alert: UIAlertAction!) in self.callNumber(number: callNumber)}),
+                                               UIAlertAction(title: "FaceTime", style: .default, handler: {(alert: UIAlertAction!) in facetime(phoneNumber: textNumber)}),
+                                               UIAlertAction(title: "Cancel", style: .cancel, handler: nil)],
+                                     preferred: "Text")
                 
                 self.present(alert, animated: true)
                 
@@ -270,7 +276,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     } //end callNumber
     
     func textNumber(number: String) {
-        UIApplication.shared.open(URL(string: "sms:\(number)")!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(URL(string: "sms:\(number)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     } //end textNumber
     
     //gets last index of my dictionary, because that's where the contact photo always is
@@ -291,30 +297,100 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let key = storedContacts.index(storedContacts.startIndex, offsetBy: activeFriend)
         
-        let alert = UIAlertController(title: "Delete \(selected)?", message: "Are you sure you want to delete \(selected) from your CatchUp list?", preferredStyle: .alert)
-        
-        let confirmDelete = UIAlertAction(title: "Delete", style: .default) { (_) in
-            //remove current key from dictionary
+        switch UIDevice.current.userInterfaceIdiom {
+        //only iPhones support the action sheet, so this case statement uses action sheet for iPhones and alerts for iPads
+        case .phone:
+            print ("iPhone")
             
-            if self.storedContacts[key].value[10] != "" {
-                NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [self.storedContacts[key].value[10]])
-            } else {
-                print ("notification request not removed")
-            }
+            let alert = UIAlertController(
+                title: nil,
+                message: "Are you sure you want to delete this contact from your CatchUp list?",
+                preferredStyle: .actionSheet)
             
-            self.storedContacts.removeValue(forKey: selected)
+            alert.messageActions(actions: [UIAlertAction(title: "Delete \(selected)", style: .destructive) { (_) in
+                //remove current key from dictionary
+                if self.storedContacts[key].value[10] != "" {
+                    NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [self.storedContacts[key].value[10]])
+                    print ("notification request removed")
+                } else {
+                    print ("notification request not removed")
+                }
+                
+                self.storedContacts.removeValue(forKey: selected)
+                UserDefaults.standard.set(self.storedContacts, forKey: "selectedContacts")
+                
+                //go back to home screen
+                _ = self.navigationController?.popViewController(animated: true)
+                },
+                                           UIAlertAction(title: "Cancel", style: .cancel, handler: nil)],
+                                 preferred: "Text")
             
-            UserDefaults.standard.set(self.storedContacts, forKey: "selectedContacts")
+            self.present(alert, animated: true)
             
-            //go back to home screen
-            _ = self.navigationController?.popViewController(animated: true)
+        case .pad:
+            print ("iPad")
+            
+            let alert = UIAlertController(
+                title: nil,
+                message: "Are you sure you want to delete this contact from your CatchUp list?",
+                preferredStyle: .alert
+            )
+            
+            alert.messageActions(actions: [UIAlertAction(title: "Delete \(selected)", style: .destructive) { (_) in
+                //remove current key from dictionary
+                if self.storedContacts[key].value[10] != "" {
+                    NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [self.storedContacts[key].value[10]])
+                    print ("notification request removed")
+                } else {
+                    print ("notification request not removed")
+                }
+                
+                self.storedContacts.removeValue(forKey: selected)
+                UserDefaults.standard.set(self.storedContacts, forKey: "selectedContacts")
+                
+                //go back to home screen
+                _ = self.navigationController?.popViewController(animated: true)
+                },
+                                           UIAlertAction(title: "Cancel", style: .cancel, handler: nil)],
+                                 preferred: "Text")
+            
+            self.present(alert, animated: true)
+            
+        case .unspecified:
+            print ("What device could this be?")
+            
+            let alert = UIAlertController(
+                title: nil,
+                message: "Are you sure you want to delete this contact from your CatchUp list?",
+                preferredStyle: .alert
+            )
+            
+            alert.messageActions(actions: [UIAlertAction(title: "Delete \(selected)", style: .destructive) { (_) in
+                //remove current key from dictionary
+                if self.storedContacts[key].value[10] != "" {
+                    NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [self.storedContacts[key].value[10]])
+                    print ("notification request removed")
+                } else {
+                    print ("notification request not removed")
+                }
+                
+                self.storedContacts.removeValue(forKey: selected)
+                UserDefaults.standard.set(self.storedContacts, forKey: "selectedContacts")
+                
+                //go back to home screen
+                _ = self.navigationController?.popViewController(animated: true)
+                },
+                                           UIAlertAction(title: "Cancel", style: .cancel, handler: nil)],
+                                 preferred: "Text")
+            
+            self.present(alert, animated: true)
+            
+        case .tv:
+            print("CatchUp is not available on Apple TV")
+            
+        case .carPlay:
+            print("CatchUp does not support Apple CarPlay")
         }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(cancel)
-        alert.addAction(confirmDelete)
-        present(alert, animated: true, completion: nil)
         
     } //end deletePressed
     
@@ -327,7 +403,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     } //end prepare(for segue:)
     
-    /*valuable code so not deleting it
+    /*valuable regex code so not deleting it
      //regex check for a valid phone number
      //got from the second answer here (https://stackoverflow.com/questions/16699007/regular-expression-to-match-standard-10-digit-phone-number)
      func isValidPhoneNumber(value: String) -> Bool {
@@ -355,4 +431,18 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
      }
      */
     
+}
+
+private func facetime(phoneNumber:String) {
+    if let facetimeURL:NSURL = NSURL(string: "facetime://\(phoneNumber)") {
+        let application:UIApplication = UIApplication.shared
+        if (application.canOpenURL(facetimeURL as URL)) {
+            application.open(facetimeURL as URL, options: [:], completionHandler: nil)
+        }
+    }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

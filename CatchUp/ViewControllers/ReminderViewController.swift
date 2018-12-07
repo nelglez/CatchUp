@@ -251,7 +251,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "reminderCell")
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "reminderCell")
         
         cell.selectionStyle = .none
         
@@ -1014,6 +1014,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         
     } //end uncheckAllCells
     
+    //need a random string to be the unique identifier for each notification
     func randomString(length: Int) -> String {
         
         let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"

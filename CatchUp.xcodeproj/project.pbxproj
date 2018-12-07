@@ -31,7 +31,6 @@
 		F4BE9306206F03100033FE80 /* Walkthrough2.png in Resources */ = {isa = PBXBuildFile; fileRef = F4BE92FF206F030F0033FE80 /* Walkthrough2.png */; };
 		F4D830BC2095318A008F30B7 /* Walkthrough5.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D830BB2095318A008F30B7 /* Walkthrough5.png */; };
 		F4E2A0AF204CDAB300E6CD51 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */; };
-		F4E2A0B2204CDB5900E6CD51 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,7 +61,6 @@
 		F4BE92FF206F030F0033FE80 /* Walkthrough2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough2.png; sourceTree = "<group>"; };
 		F4D830BB2095318A008F30B7 /* Walkthrough5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Walkthrough5.png; sourceTree = "<group>"; };
 		F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		F4E3CE7020B8B41800436759 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		F4E3CE7120B8B41800436759 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				F4E2A0AE204CDAB300E6CD51 /* NotificationService.swift */,
-				F4E2A0B1204CDB5900E6CD51 /* AlertService.swift */,
 				F4573E33207867E500A92667 /* IAPService.swift */,
 			);
 			path = Services;
@@ -208,6 +205,7 @@
 				TargetAttributes = {
 					F47101CA1FB5614A009D34EF = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
@@ -272,7 +270,6 @@
 				F40CCE0C200AA0990054CC5F /* UIImage+Conversions.swift in Sources */,
 				F44F1978201C1E16008CE4DB /* CKRecord+Enum.swift in Sources */,
 				F4573E34207867E500A92667 /* IAPService.swift in Sources */,
-				F4E2A0B2204CDB5900E6CD51 /* AlertService.swift in Sources */,
 				F4E2A0AF204CDAB300E6CD51 /* NotificationService.swift in Sources */,
 				F439D1CD2050DA7D00B43C15 /* AboutViewController.swift in Sources */,
 				F401FDDA20328527009F8632 /* ReminderViewController.swift in Sources */,
@@ -433,7 +430,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tokensolutions.CatchUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -450,7 +447,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tokensolutions.CatchUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

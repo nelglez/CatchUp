@@ -38,7 +38,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         //self.navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "Hello!.jpg"), for: .default)
         
         //set Add Contacts button to size 20 semibold
-        addButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)], for: [])
+        addButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)], for: [])
         
     } //end viewDidLoad
     
@@ -105,8 +105,8 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
         //If the user has tapped 'Don't Allow' when requested
         case .denied:
-            let alert = UIAlertController(title: "Cannot Add Contacts", message: "🤭 You denied CatchUp access to your Contacts. To change this, go the Settings app, scroll down to CatchUp, and turn on Allow CatchUp to Access Contacts", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
+            let alert = UIAlertController(title: "Cannot Add Contacts", message: "🤭 You denied CatchUp access to your Contacts. To change this, go the Settings app, scroll down to CatchUp, and turn on Allow CatchUp to Access Contacts", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             //print("We need access to your Contacts to remind you to CatchUp with your friends!")
             
@@ -139,7 +139,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
                 // there is an image for this contact
                 contactPicture = (contact.thumbnailImageData?.base64EncodedString())!
             } else {
-                let imageData: NSData = UIImagePNGRepresentation(#imageLiteral(resourceName: "DefaultPhoto.png"))! as NSData
+                let imageData: NSData = #imageLiteral(resourceName: "DefaultPhoto.png").pngData()! as NSData
                 contactPicture = imageData.base64EncodedString()
             }
             
@@ -363,7 +363,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         //If there are no keys stored for key 'selectedContacts'
         if isKeyPresentInUserDefaults(key: "selectedContacts") == false {
             
-            let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
+            let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "Cell")
             cell.textLabel?.text = ""
             cell.accessoryType = .disclosureIndicator
             return cell
@@ -372,7 +372,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         } else {
             
             let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
-            let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "Cell")
+            let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "Cell")
             let cellImageView = cell.imageView!
             //returns name (key) of selected
             let keys = Array(storedContacts.keys)[indexPath.row]
@@ -426,27 +426,98 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             //returns name (key) of selected
             let selected = Array(storedContacts.keys)[indexPath.row]
             let key = storedContacts.index(forKey: selected)
-            let alert = UIAlertController(title: "Delete \(selected)?", message: "Are you sure you want to delete \(selected) from your CatchUp list?", preferredStyle: .alert)
             
-            let confirmDelete = UIAlertAction(title: "Delete", style: .default) { (_) in
-                //remove current key from dictionary
-                if storedContacts[key!].value[10] != "" {
-                    NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key!].value[10]])
-                } else {
-                    print ("notification request not removed")
-                }
+            switch UIDevice.current.userInterfaceIdiom {
+                //only iPhones support the action sheet, so this case statement uses action sheet for iPhones and alerts for iPads
+            case .phone:
+                print ("iPhone")
                 
-                storedContacts.removeValue(forKey: selected)
-                UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
+                let alert = UIAlertController(
+                    title: nil,
+                    message: "Are you sure you want to delete this contact from your CatchUp list?",
+                    preferredStyle: .actionSheet)
                 
-                self.friendsTable.reloadData()
+                alert.messageActions(actions: [UIAlertAction(title: "Delete \(selected)", style: .destructive) { (_) in
+                    //remove current key from dictionary
+                    if storedContacts[key!].value[10] != "" {
+                        NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key!].value[10]])
+                        print ("notification request removed")
+                    } else {
+                        print ("notification request not removed")
+                    }
+                    
+                    storedContacts.removeValue(forKey: selected)
+                    UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
+                    
+                    self.friendsTable.reloadData()
+                    },
+                                               UIAlertAction(title: "Cancel", style: .cancel, handler: nil)],
+                                     preferred: "Text")
+                
+                self.present(alert, animated: true)
+                
+            case .pad:
+                print ("iPad")
+                
+                let alert = UIAlertController(
+                    title: nil,
+                    message: "Are you sure you want to delete this contact from your CatchUp list?",
+                    preferredStyle: .alert
+                )
+                
+                alert.messageActions(actions: [UIAlertAction(title: "Delete \(selected)", style: .destructive) { (_) in
+                    //remove current key from dictionary
+                    if storedContacts[key!].value[10] != "" {
+                        NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key!].value[10]])
+                        print ("notification request removed")
+                    } else {
+                        print ("notification request not removed")
+                    }
+                    
+                    storedContacts.removeValue(forKey: selected)
+                    UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
+                    
+                    self.friendsTable.reloadData()
+                    },
+                                               UIAlertAction(title: "Cancel", style: .cancel, handler: nil)],
+                                     preferred: "Text")
+                
+                self.present(alert, animated: true)
+                
+            case .unspecified:
+                print ("What device could this be?")
+                
+                let alert = UIAlertController(
+                    title: nil,
+                    message: "Are you sure you want to delete this contact from your CatchUp list?",
+                    preferredStyle: .alert
+                )
+                
+                alert.messageActions(actions: [UIAlertAction(title: "Delete \(selected)", style: .destructive) { (_) in
+                    //remove current key from dictionary
+                    if storedContacts[key!].value[10] != "" {
+                        NotificationService.shared.notification.removePendingNotificationRequests(withIdentifiers: [storedContacts[key!].value[10]])
+                        print ("notification request removed")
+                    } else {
+                        print ("notification request not removed")
+                    }
+                    
+                    storedContacts.removeValue(forKey: selected)
+                    UserDefaults.standard.set(storedContacts, forKey: "selectedContacts")
+                    
+                    self.friendsTable.reloadData()
+                    },
+                                               UIAlertAction(title: "Cancel", style: .cancel, handler: nil)],
+                                     preferred: "Text")
+                
+                self.present(alert, animated: true)
+                
+            case .tv:
+                print("CatchUp is not available on Apple TV")
+                
+            case .carPlay:
+                print("CatchUp does not support Apple CarPlay")
             }
-            
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            
-            alert.addAction(cancel)
-            alert.addAction(confirmDelete)
-            self.present(alert, animated: true, completion: nil)
             
         }
         
@@ -481,20 +552,6 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         
         return UserDefaults.standard.object(forKey: "selectedContacts") != nil
         
-        /*
-         let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
-         
-         let selectedContacts: [String:[String]] = (storedContacts as? [String:[String]])!
-         
-         if selectedContacts.count != 0 {
-         print ("true")
-         return true //there is something in UserDefaults
-         } else {
-         print ("false")
-         return false //there is nothing in UserDefaults
-         }
-         */
-        
     } //end isKeyPresentInUserDefaults
     
     //what happens when the segue is performed
@@ -506,7 +563,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         }
     } //end prepare(for segue:)
     
-    /*
+    /* not using this but may attempt in the future
      func saveToiCloud(contactData: [String:[String]]) {
      
      /* this enum in CKRecord+Enum.swift extension
