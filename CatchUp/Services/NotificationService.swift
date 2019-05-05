@@ -92,7 +92,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         case 13:
             content.body = "You know they'll really appreciate it"
         case 14:
-            content.body = "I'm not guilting you into this or anything, but they'll be sad if you don't say hello."
+            content.body = "I'm not guilting you into this or anything, but this person will be sad if you don't say hello."
         default:
             content.body = "Keep in touch"
             
