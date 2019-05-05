@@ -276,7 +276,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
     } //end callNumber
     
     func textNumber(number: String) {
-        UIApplication.shared.open(URL(string: "sms:\(number)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+        UIApplication.shared.open(URL(string: "sms:\(number)")!)
     } //end textNumber
     
     //gets last index of my dictionary, because that's where the contact photo always is
@@ -440,9 +440,4 @@ private func facetime(phoneNumber:String) {
             application.open(facetimeURL as URL, options: [:], completionHandler: nil)
         }
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

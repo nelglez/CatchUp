@@ -3,7 +3,7 @@
 //  CatchUp
 //
 //  Created by Ryan Token on 3/6/18.
-//  Copyright © 2018 Token Solutions. All rights reserved.
+//  Copyright © 2019 Token Solutions. All rights reserved.
 //
 
 import Foundation

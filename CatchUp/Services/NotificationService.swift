@@ -3,7 +3,7 @@
 //  CatchUp
 //
 //  Created by Ryan Token on 3/4/18.
-//  Copyright © 2018 Token Solutions. All rights reserved.
+//  Copyright © 2019 Token Solutions. All rights reserved.
 //
 
 import Foundation
@@ -54,29 +54,10 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         
     }
     
-    //TimeInterval is just a double
-    //timer push notification
-    /*not using this one anymore
-    func timerRequest(with interval: TimeInterval, contactName: String, identifier: String) {
-        
-        let content = UNMutableNotificationContent()
-        content.title = "👋 Time to CatchUp with \(contactName)!"
-        content.body = "Now you can be best buddies again"
-        content.sound = .default()
-        content.badge = 1
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: true)
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-        
-        notification.add(request)
-        
-    }
-    */
-    
     //date push notification
     func dateRequest(with components: DateComponents, contactName: String, identifier: String) {
         
-        let randomNumberZeroToNine = Int(arc4random_uniform(10))
+        let randomNumberZeroToNine = Int(arc4random_uniform(15))
         
         let content = UNMutableNotificationContent()
         content.title = "👋 CatchUp with \(contactName)!"
@@ -102,6 +83,16 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
             content.body = "Here's that reminder you set to check in with someone important. Maybe you'll make their day"
         case 9:
             content.body = "Once a good person, always a good person (you are a good person, and probably so is the person you want to be reminded to CatchUp with)"
+        case 10:
+            content.body = "Yet another reminder to get back in touch with ⬆️"
+        case 11:
+            content.body = "Time to get back in contact with one of your favorite people"
+        case 12:
+            content.body = "So nice of you to want to stay in touch with the people you care about"
+        case 13:
+            content.body = "You know they'll really appreciate it"
+        case 14:
+            content.body = "I'm not guilting you into this or anything, but they'll be sad if you don't say hello."
         default:
             content.body = "Keep in touch"
             
@@ -148,14 +139,6 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         
     }
     
-    /*
-     func locationRequest() {
-     
-     
-     
-     }
-     */
-    
     //responds when user interacts with notification
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("UN did receive response")
@@ -172,7 +155,7 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         completionHandler(options)
         
     }
- 
+    
 }
 
 

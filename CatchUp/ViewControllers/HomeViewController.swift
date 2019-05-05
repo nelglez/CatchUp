@@ -3,7 +3,7 @@
 //  CatchUp
 //
 //  Created by Ryan Token on 11/9/17.
-//  Copyright © 2017 Token Solutions. All rights reserved.
+//  Copyright © 2019 Token Solutions. All rights reserved.
 //
 
 import UIKit
@@ -29,16 +29,12 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /* DELETES ALL USERDEFAULTS
+        /*
          if let bundle = Bundle.main.bundleIdentifier {
          UserDefaults.standard.removePersistentDomain(forName: bundle)
          }
          */
         
-        //self.navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "Hello!.jpg"), for: .default)
-        
-        //set Add Contacts button to size 20 semibold
-        addButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)], for: [])
         
     } //end viewDidLoad
     
@@ -61,16 +57,15 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
         //let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts")
-        
         //print("Contacts Dictionary: \(storedContacts ?? "Nothing Here Yet")")
         
         friendsTable.reloadData()
         
     } //end viewDidAppear
     
-    //Executes when the + button is tapped
+    //Executes when the Add Contacts button is tapped
     //Requests access if not given yet, and displays the user's Contacts upon approval
-    @IBAction func addFriends(_ sender: Any) {
+    @IBAction func addContacts(_ sender: Any) {
         
         //Requests access to user's contacts
         let store = CNContactStore()
@@ -81,7 +76,6 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         }
         
         switch CNContactStore.authorizationStatus(for: .contacts){
-            
         //Requests access to user's contacts
         case .notDetermined:
             //print("Not Determined")
@@ -112,13 +106,17 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             
         //not sure what this is
         case .restricted:
-            print("Probably won't have to deal with this")
+            print("Do nothing.")
+            
+        default:
+            print("Do nothing.")
             
         }
         
-    } //end addFriends
+    } // End addContacts
     
-    //Executes when a contact is selected
+    // Apple's Contact Picker
+    // Parses out all information the user has on the contact
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         
         //First checks if there are keys in the dictionary
@@ -139,6 +137,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
                 // there is an image for this contact
                 contactPicture = (contact.thumbnailImageData?.base64EncodedString())!
             } else {
+                // there is not an image for this contact, use the default image
                 let imageData: NSData = #imageLiteral(resourceName: "DefaultPhoto.png").pngData()! as NSData
                 contactPicture = imageData.base64EncodedString()
             }
@@ -352,6 +351,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
         }
     } //end numberOfRowsInSection
     
+    // Set height of each row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
         //return UITableViewAutomaticDimension
@@ -374,13 +374,17 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             let storedContacts = UserDefaults.standard.object(forKey: "selectedContacts") as! [String:[String]]
             let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "Cell")
             let cellImageView = cell.imageView!
+            
             //returns name (key) of selected
             let keys = Array(storedContacts.keys)[indexPath.row]
+            
             //returns phone number (value) of selected
             let values = Array(storedContacts.values)[indexPath.row]
+            
             //returns string of contact photo (or defaultContact.jpg) of selected
             let contactPictureString = Array(storedContacts.values)[indexPath.row].last
-            //converts contactPhotoString to the actual image
+            
+            //converts contactPictureString to the actual image
             let contactPicture = contactPictureString!.imageFromBase64EncodedString
             
             cellImageView.accessibilityIgnoresInvertColors = true
@@ -428,7 +432,7 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             let key = storedContacts.index(forKey: selected)
             
             switch UIDevice.current.userInterfaceIdiom {
-                //only iPhones support the action sheet, so this case statement uses action sheet for iPhones and alerts for iPads
+            //only iPhones support the Action Sheet, so this case statement uses Action Sheet for iPhones and Alerts for iPads
             case .phone:
                 print ("iPhone")
                 
@@ -484,6 +488,12 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
                 
                 self.present(alert, animated: true)
                 
+            case .tv:
+                print("CatchUp is not available on Apple TV")
+                
+            case .carPlay:
+                print("CatchUp does not support Apple CarPlay")
+                
             case .unspecified:
                 print ("What device could this be?")
                 
@@ -512,11 +522,9 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
                 
                 self.present(alert, animated: true)
                 
-            case .tv:
-                print("CatchUp is not available on Apple TV")
+            default:
+                print("Do nothing.")
                 
-            case .carPlay:
-                print("CatchUp does not support Apple CarPlay")
             }
             
         }
@@ -562,48 +570,6 @@ class HomeViewController: UIViewController, CNContactPickerDelegate, UITableView
             detailsViewController.activeFriend = activeFriend //sets activeRow in DetailsViewController to the row just tapped in TableViewController!
         }
     } //end prepare(for segue:)
-    
-    /* not using this but may attempt in the future
-     func saveToiCloud(contactData: [String:[String]]) {
-     
-     /* this enum in CKRecord+Enum.swift extension
-     enum contactKey: String {
-     case fullName
-     case primaryPhoneNumber
-     case secondaryPhoneNumber
-     case primaryEmail
-     case secondaryEmail
-     case primaryAddress
-     case secondaryAddress
-     case birthday
-     case anniversary
-     case contactPicture
-     }
-     */
-     
-     let savedContact = CKRecord(recordType: "savedContact")
-     
-     savedContact[.fullName] = Array(contactData.keys)[0]
-     
-     print(savedContact[.fullName])
-     
-     //savedContact.setValue(contactName, forKey: "data")
-     
-     /*
-     database.save(savedContact) { (record, error) in
-     
-     print(error ?? "No errors here, move along")
-     
-     guard record != nil else { return }
-     
-     print("Saved record with contact \(record?.object(forKey: "data") ?? "" as CKRecordValue)")
-     
-     }
-     */
-     
-     
-     }
-     */
     
 }
 

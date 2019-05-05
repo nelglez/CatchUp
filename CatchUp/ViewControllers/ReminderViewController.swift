@@ -3,7 +3,7 @@
 //  CatchUp
 //
 //  Created by Ryan Token on 2/12/18.
-//  Copyright © 2018 Token Solutions. All rights reserved.
+//  Copyright © 2019 Token Solutions. All rights reserved.
 //
 
 import UIKit
@@ -158,66 +158,44 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         let minDate = Calendar.current.date(byAdding: components, to: Date())
         customDatePicker.minimumDate = minDate
         
-        if storedContacts[key].value[8] == "Custom" {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss" //Day/time date format
-            dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
-            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
-            
-            customDatePicker.date = setDate ?? minDate!
-            
-        } else if storedContacts[key].value[8] == "Every Day" {
-            
+        //set the date picker to the chosen setting
+        func formatDates(picker:String) {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm:ss" //Only time date format
             //dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
-            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
-            
-            dayDatePicker.date = setDate ?? minDate!
-            
-        } else if storedContacts[key].value[8] == "Every Week" {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm:ss" //Only time date format
-            //dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
-            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
-            
-            weekDatePicker.date = setDate ?? minDate!
-            
-        } else if storedContacts[key].value[8] == "Every Month" {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm:ss" //Only time date format
-            //dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
-            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
-            
-            monthDatePicker.date = setDate ?? minDate!
-            
-        } else if storedContacts[key].value[8] == "Every Year" {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm:ss" //Only time date format
-            //dateFormatter.timeZone = TimeZone(abbreviation: "CST+0:00") //Current time zone
-            let setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date format your date string
-            
-            yearDatePicker.date = setDate ?? minDate!
-            
-        } else {
-            
-            customDatePicker.date = minDate!
-            
+            var setDate = dateFormatter.date(from: storedContacts[key].value[9]) //according to date, format your date string
+            switch picker{
+            case "Custom":
+                dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss" //Day/time date format
+                setDate = dateFormatter.date(from: storedContacts[key].value[9])
+                customDatePicker.date = setDate ?? minDate!
+            case "Every Day":
+                dayDatePicker.date = setDate ?? minDate!
+            case "Every Week":
+                weekDatePicker.date = setDate ?? minDate!
+            case "Every Month":
+                monthDatePicker.date = setDate ?? minDate!
+            case "Every Year":
+                yearDatePicker.date = setDate ?? minDate!
+            default:
+                customDatePicker.date = minDate!
+            }
         }
         
-        //print(storedContacts[index].key)
-        //print(storedContacts[key].value[0])
-        //print(storedContacts[key].value[8]) //reminderType
-        
-        //print(storedContacts[key].value[9]) //reminderPreference
-        
-        //set Save button to size 20 semibold
-        //saveButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)], for: [])
-        
+        switch storedContacts[key].value[8] {
+        case "Custom":
+            formatDates(picker: "Custom")
+        case "Every Day":
+            formatDates(picker: "Every Day")
+        case "Every Week":
+            formatDates(picker: "Every Week")
+        case "Every Month":
+            formatDates(picker: "Every Month")
+        case "Every Year":
+            formatDates(picker: "Every Year")
+        default:
+            customDatePicker.date = minDate!
+        }
         
     } //end viewDidLoad
     
@@ -230,15 +208,6 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         
         // Prepare the generator when the gesture begins.
         feedbackGenerator?.prepare()
-        
-        /*
-         let center = UNUserNotificationCenter.current()
-         center.getPendingNotificationRequests(completionHandler: { requests in
-         for request in requests {
-         print(request)
-         }
-         })
-         */
         
     } //end viewDidAppear
     
@@ -276,50 +245,35 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         
         if storedContacts[key].value[8] == "Every Day" && indexPath.row == 0 {
             
+            hideAllDatePickers()
             dayDatePicker.isHidden = false
-            weekDatePicker.isHidden = true
-            monthDatePicker.isHidden = true
-            yearDatePicker.isHidden = true
-            customDatePicker.isHidden = true
             
             cell.accessoryType = .checkmark
             
         } else if storedContacts[key].value[8] == "Every Week" && indexPath.row == 1 {
             
-            dayDatePicker.isHidden =  true
+            hideAllDatePickers()
             weekDatePicker.isHidden = false
-            monthDatePicker.isHidden = true
-            yearDatePicker.isHidden = true
-            customDatePicker.isHidden = true
             
             cell.accessoryType = .checkmark
             
         } else if storedContacts[key].value[8] == "Every Month" && indexPath.row == 2 {
             
-            dayDatePicker.isHidden =  true
-            weekDatePicker.isHidden = true
+            hideAllDatePickers()
             monthDatePicker.isHidden = false
-            yearDatePicker.isHidden = true
-            customDatePicker.isHidden = true
             
             cell.accessoryType = .checkmark
             
         } else if storedContacts[key].value[8] == "Every Year" && indexPath.row == 3 {
             
-            dayDatePicker.isHidden =  true
-            weekDatePicker.isHidden = true
-            monthDatePicker.isHidden = true
+            hideAllDatePickers()
             yearDatePicker.isHidden = false
-            customDatePicker.isHidden = true
             
             cell.accessoryType = .checkmark
             
         } else if storedContacts[key].value[8] == "Custom" && indexPath.row == 4 {
             
-            dayDatePicker.isHidden =  true
-            weekDatePicker.isHidden = true
-            monthDatePicker.isHidden = true
-            yearDatePicker.isHidden = true
+            hideAllDatePickers()
             customDatePicker.isHidden = false
             
             cell.accessoryType = .checkmark
@@ -359,11 +313,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
+                hideAllDatePickers()
                 dayDatePicker.isHidden = false
-                weekDatePicker.isHidden = true
-                monthDatePicker.isHidden = true
-                yearDatePicker.isHidden = true
-                customDatePicker.isHidden = true
                 
                 dateString = "1"
                 let dateFormatter = DateFormatter()
@@ -406,11 +357,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 //removes the reminder that was set before and updates the dictionary
             } else if indexPath.row == 0 && cell.accessoryType == .none {
                 
-                dayDatePicker.isHidden = true
-                weekDatePicker.isHidden = true
-                monthDatePicker.isHidden = true
-                yearDatePicker.isHidden = true
-                customDatePicker.isHidden = true
+                hideAllDatePickers()
                 
                 dateString = ""
                 
@@ -433,11 +380,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
-                dayDatePicker.isHidden = true
+                hideAllDatePickers()
                 weekDatePicker.isHidden = false
-                monthDatePicker.isHidden = true
-                yearDatePicker.isHidden = true
-                customDatePicker.isHidden = true
                 
                 dateString = "7"
                 let dateFormatter = DateFormatter()
@@ -482,11 +426,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
             } else if indexPath.row == 1 && cell.accessoryType == .none {
                 
-                dayDatePicker.isHidden = true
-                weekDatePicker.isHidden = true
-                monthDatePicker.isHidden = true
-                yearDatePicker.isHidden = true
-                customDatePicker.isHidden = true
+                hideAllDatePickers()
                 
                 dateString = ""
                 
@@ -509,11 +449,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
-                dayDatePicker.isHidden = true
-                weekDatePicker.isHidden = true
+                hideAllDatePickers()
                 monthDatePicker.isHidden = false
-                yearDatePicker.isHidden = true
-                customDatePicker.isHidden = true
                 
                 dateString = "30"
                 let dateFormatter = DateFormatter()
@@ -565,11 +502,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
             } else if indexPath.row == 2 && cell.accessoryType == .none {
                 
-                dayDatePicker.isHidden = true
-                weekDatePicker.isHidden = true
-                monthDatePicker.isHidden = true
-                yearDatePicker.isHidden = true
-                customDatePicker.isHidden = true
+                hideAllDatePickers()
                 
                 dateString = ""
                 
@@ -592,11 +525,8 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
-                dayDatePicker.isHidden = true
-                weekDatePicker.isHidden = true
-                monthDatePicker.isHidden = true
+                hideAllDatePickers()
                 yearDatePicker.isHidden = false
-                customDatePicker.isHidden = true
                 
                 dateString = "365"
                 let dateFormatter = DateFormatter()
@@ -645,11 +575,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
             } else if indexPath.row == 3 && cell.accessoryType == .none {
                 
-                dayDatePicker.isHidden = true
-                weekDatePicker.isHidden = true
-                monthDatePicker.isHidden = true
-                yearDatePicker.isHidden = true
-                customDatePicker.isHidden = true
+                hideAllDatePickers()
                 
                 dateString = ""
                 
@@ -672,10 +598,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 // Keep the generator in a prepared state.
                 feedbackGenerator?.prepare()
                 
-                dayDatePicker.isHidden = true
-                weekDatePicker.isHidden = true
-                monthDatePicker.isHidden = true
-                yearDatePicker.isHidden = true
+                hideAllDatePickers()
                 customDatePicker.isHidden = false
                 
                 let dateFormatter = DateFormatter()
@@ -741,11 +664,7 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
                 
             } else if indexPath.row == 4 && cell.accessoryType == .none {
                 
-                dayDatePicker.isHidden = true
-                weekDatePicker.isHidden = true
-                monthDatePicker.isHidden = true
-                yearDatePicker.isHidden = true
-                customDatePicker.isHidden = true
+                hideAllDatePickers()
                 
                 dateString = ""
                 
@@ -1030,5 +949,13 @@ class ReminderViewController: UIViewController, UITableViewDelegate, UITableView
         
         return randomString
     } //end randomString
+    
+    func hideAllDatePickers() {
+        dayDatePicker.isHidden =  true
+        weekDatePicker.isHidden = true
+        monthDatePicker.isHidden = true
+        yearDatePicker.isHidden = true
+        customDatePicker.isHidden = true
+    }
     
 }
